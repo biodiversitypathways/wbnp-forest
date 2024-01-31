@@ -1,0 +1,61 @@
+---
+title: "Report on the use of passive acoustic monitoring for evaluating ecological integrity in Wood Buffalo National Park"
+format:
+  html:
+    grid:
+      margin-width: 300px
+  pdf: default
+navbar: right
+theme: cosmo
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+author: "Alex MacPhail"
+editor: visual
+bibliography: references.bib
+nocite: '@*'
+toc: true
+toc-depth: 3
+toc-expand: true
+toc-location: left
+styles: styles.css
+reference-location: margin
+citation-location: margin
+---
+
+# Abstract
+
+---
+
+# Introduction
+
+---
+
+# Methods 
+
+## Data collection
+
+## Data management
+
+## Community data processing
+
+## Visual scanning
+
+## Automated recognition
+
+---
+
+# Results
+
+## Avian species
+
+### Species richness
+
+### Species diversity 
+
+### Species occupancy
+
+## Visual scanning
+
+## Amphibians
+
+# Discussion
+
