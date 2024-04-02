@@ -1,5 +1,5 @@
 ---
-title: "Report on the use of passive acoustic monitoring for evaluating ecological integrity in Wood Buffalo National Park"
+title: "Report on the use of passive acoustic monitoring in Wood Buffalo National Park"
 format:
   html:
     grid:
@@ -21,15 +21,118 @@ reference-location: margin
 citation-location: margin
 ---
 
+```{r}
+#| label: load-packages and authenticate
+#| include: false
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(wildRtrax)
+library(unmarked)
+library(sf)
+library(terra)
+library(vctrs)
+library(ggridges)
+library(scales)
+library(kableExtra)
+library(plotly)
+library(DT)
+library(lme4)
+library(ggpubr)
+library(vegan)
+library(MuMIn)
+library(AICcmodavg)
+
+wt_auth()
+
+load('wbnp.RData')
+#save.image('wbnp.RData')
+#cirrus_penp_recs  <- readRDS('penpcirrus.RDS')
+```
+
+```{r Data download}
+#| warning: false
+#| message: false
+#| echo: true
+#| eval: false
+#| include: true
+
+wbnp_projects <- wildRtrax::wt_get_download_summary(sensor = 'ARU') |>
+  filter(grepl('^Wood Buffalo National Park Forest Songbird', project)) |>
+  select(project_id) |>
+  pull()
+
+wbnp_main <-
+  map_dfr(
+    .x = wbnp_projects,
+    .f = ~ wildRtrax::wt_download_report(
+      project_id = .x,
+      sensor_id = "ARU",
+      weather_cols = T,
+      reports = "main"
+    )
+  )
+```
+
 # Abstract
 
----
+Passive acoustic monitoring has proven to be a valuable tool for monitoring vocalizing species. Environmental sensors are becoming increasingly easy to program and can autonomously generate extensive data sets of the soundscape, becoming an invaluable resource for ecological integrity monitoring. Wood Buffalo National Park deployed autonomous recording units (ARUs) across `r wbnp_locs |> st_drop_geometry() |> select(location) |> distinct() |> tally()` locations during a comprehensive five-year survey. ARUs detected a total of `r nrow(distinct_spp)` species including birds, amphibians and mammals. The analysis revealed [ ]...
+
+------------------------------------------------------------------------
+# Land Acknowledgement
+
+In the spirit of Reconciliation, we respectfully acknowledge that the lands of Wood Buffalo National Park where this study took place are the traditional territories of the Mikisew Cree First Nation, Athabasca Chipewyan First Nation, Fort Chipewyan Métis, Salt River First Nation, K'atl'odeeche First Nation, Deninu Kue First Nation, Fort Smith Métis Council, Hay River Métis Council, and the Fort Resolution Métis Council.
 
 # Introduction
 
----
+Human activities have been identified as key pressures and contributors to the global decline in forest wildlife (@allan2017recent). The repercussions of habitat fragmentation (@fahrig2003effects) and loss (@hanski2011habitat), climate change (@mantyka2012interactions, @sattar2021review, @abrahms2023climate), and increased access to sensitive areas exert direct and indirect pressures on forest biodiversity, particularly in managed regions in Canada (@lemieux2011state).
+
+In 2018, Wood Buffalo National Park's Forested Region initiated a program incorporating autonomous recording units (ARUs) for passive acoustic monitoring (PAM) of the Park's wildlife. ARUs are compact environmental sensors that are designed to passively record the environment (@aru-overview), capturing vocalizing species like birds and amphibians, which is growing in use across the globe (@lots-of-pam). This technology enables resource managers to conduct prolonged surveys with minimal human interference. The subsequent data collected by these units contribute valuable information to ecological integrity metrics such as species richness, diversity, occupancy, and trends over time. This data aids decision-making and management within the Park. Given the rapid and ease of accumulating data from these units, maintaining a high standard of data integrity is paramount to ensure future data interoperability and sharing. [WildTrax](https://www.wildtrax.ca) is an online platform developed by the [Alberta Biodiversity Monitoring Institute (**ABMI**)](https://abmi.ca) for users of environmental sensors to help addresses these big data challenges by providing solutions to standardize, harmonize, and share data.
+
+The objectives of this report are to:
+
+-   Describe the data management and processing procedures for the acoustic data collected from 2018 to 2023;
+-   Utilize traditional human tagging, visual scanning and automated recognition techniques to detect and count species and individuals heard on recordings;
+-   Define straightforward methods for evaluating species presence, species richness, and species occupancy over time at various locations;
+-   Offer recommendations for ongoing monitoring approaches to contribute to the assessment of ecological integrity in forest ecosystems;
+-   Facilitate data publication to the public, resource managers, academic institutions, and any other relevant agencies
+
+------------------------------------------------------------------------
 
 # Methods 
+
+Data were collected during the spring and summer seasons from `r min(wbnp_locs$year)` to `r max(wbnp_locs$year)`. A total of `r wbnp_locs |> st_drop_geometry() |> select(location) |> distinct() |> tally()` locations were surveyed over the five-year period:
+
+Locations were surveyed on rotation with `r length(repeats)` locations (`r repeats`) surveyed each year. A detailed list of all survey years can be found in Table 1 (@tbl-loc-summary) and illustrated in Figure 1 (@fig-locs). ARUs were deployed at the beginning of the breeding season in April-May, and rotated locations until their final retrieval in July-August. The ARUs were set to record for []. On average, each ARU recorded for `r average_deployment$mean` +/- `r average_deployment$sd` days.
+
+```{r}
+#| warning: false
+#| echo: false
+#| eval: true
+#| message: false
+#| include: true
+#| results: hide
+
+wbnp_locs <- wbnp_main |>
+  mutate(year = lubridate::year(recording_date_time)) |>
+  select(location, latitude, longitude, year) |>
+  distinct() |>
+  sf::st_as_sf(coords = c("longitude","latitude"), crs = 4326)
+
+repeats <- wbnp_locs |>
+  st_drop_geometry() |>
+  group_by(location) |>
+  summarise(count = n_distinct(year)) |>
+  ungroup() |>
+  filter(count == 5) |>
+  select(location) |>
+  distinct() |>
+  pull()
+
+```
 
 ## Data collection
 
