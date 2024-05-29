@@ -4,7 +4,6 @@ format:
   html:
     grid:
       margin-width: 300px
-  pdf: default
 navbar: right
 theme: cosmo
 date: "`r format(Sys.time(), '%d %B, %Y')`"
@@ -51,15 +50,15 @@ wt_auth()
 
 load('wbnp.RData')
 #save.image('wbnp.RData')
-#cirrus_penp_recs  <- readRDS('penpcirrus.RDS')
+#cirrus_wbnp_recs  <- readRDS('wbnpcirrus.RDS')
 ```
 
 ```{r Data download}
 #| warning: false
 #| message: false
-#| echo: true
+#| echo: false
 #| eval: false
-#| include: true
+#| include: false
 
 wbnp_projects <- wildRtrax::wt_get_download_summary(sensor = 'ARU') |>
   filter(grepl('^Wood Buffalo National Park Forest Songbird', project)) |>
@@ -78,12 +77,13 @@ wbnp_main <-
   )
 ```
 
+![](wbnp-banner.jpg){style="float:left`;" fig-alt="Photo of a glacier" fig-align="center"}
+
 # Abstract
 
-Passive acoustic monitoring has proven to be a valuable tool for monitoring vocalizing species. Environmental sensors are becoming increasingly easy to program and can autonomously generate extensive data sets of the soundscape, becoming an invaluable resource for ecological integrity monitoring. Wood Buffalo National Park deployed autonomous recording units (ARUs) across `r wbnp_locs |> st_drop_geometry() |> select(location) |> distinct() |> tally()` locations during a comprehensive five-year survey. ARUs detected a total of `r nrow(distinct_spp)` species including birds, amphibians and mammals. The analysis revealed [ ]...
+Passive acoustic monitoring has proven to be a valuable tool for monitoring vocalizing species. Environmental sensors are becoming increasingly easy to program and can autonomously generate extensive data sets of the soundscape, becoming an invaluable resource for ecological integrity monitoring. Wood Buffalo National Park deployed autonomous recording units (ARUs) across `r wbnp_locs |> st_drop_geometry() |> select(location) |> distinct() |> tally()` locations during a comprehensive five-year survey. ARUs detected a total of `r nrow(distinct_spp)` species including birds, amphibians and mammals. The analysis revealed 
 
-------------------------------------------------------------------------
-# Land Acknowledgement
+# Land Acknowledgement                                                                                                                   
 
 In the spirit of Reconciliation, we respectfully acknowledge that the lands of Wood Buffalo National Park where this study took place are the traditional territories of the Mikisew Cree First Nation, Athabasca Chipewyan First Nation, Fort Chipewyan Métis, Salt River First Nation, K'atl'odeeche First Nation, Deninu Kue First Nation, Fort Smith Métis Council, Hay River Métis Council, and the Fort Resolution Métis Council.
 
@@ -93,21 +93,18 @@ Human activities have been identified as key pressures and contributors to the g
 
 In 2018, Wood Buffalo National Park's Forested Region initiated a program incorporating autonomous recording units (ARUs) for passive acoustic monitoring (PAM) of the Park's wildlife. ARUs are compact environmental sensors that are designed to passively record the environment (@aru-overview), capturing vocalizing species like birds and amphibians, which is growing in use across the globe (@lots-of-pam). This technology enables resource managers to conduct prolonged surveys with minimal human interference. The subsequent data collected by these units contribute valuable information to ecological integrity metrics such as species richness, diversity, occupancy, and trends over time. This data aids decision-making and management within the Park. Given the rapid and ease of accumulating data from these units, maintaining a high standard of data integrity is paramount to ensure future data interoperability and sharing. [WildTrax](https://www.wildtrax.ca) is an online platform developed by the [Alberta Biodiversity Monitoring Institute (**ABMI**)](https://abmi.ca) for users of environmental sensors to help addresses these big data challenges by providing solutions to standardize, harmonize, and share data.
 
-The objectives of this report are to:
+The objectives of this report are to:                        
 
--   Describe the data management and processing procedures for the acoustic data collected from 2018 to 2023;
--   Utilize traditional human tagging, visual scanning and automated recognition techniques to detect and count species and individuals heard on recordings;
--   Define straightforward methods for evaluating species presence, species richness, and species occupancy over time at various locations;
--   Offer recommendations for ongoing monitoring approaches to contribute to the assessment of ecological integrity in forest ecosystems;
--   Facilitate data publication to the public, resource managers, academic institutions, and any other relevant agencies
+* Describe the data management and processing procedures for the acoustic data collected from 2018 to 2023; 
+* Utilize traditional human tagging, visual scanning and automated recognition techniques to detect and count species and individuals heard on recordings; 
+* Define straightforward methods for evaluating species presence, species richness, and species occupancy over time at various locations; * Offer recommendations for ongoing monitoring approaches to contribute to the assessment of ecological integrity in forest ecosystems; 
+* Facilitate data publication to the public, resource managers, academic institutions, and any other relevant agencies
 
-------------------------------------------------------------------------
-
-# Methods 
+# Methods
 
 Data were collected during the spring and summer seasons from `r min(wbnp_locs$year)` to `r max(wbnp_locs$year)`. A total of `r wbnp_locs |> st_drop_geometry() |> select(location) |> distinct() |> tally()` locations were surveyed over the five-year period:
 
-Locations were surveyed on rotation with `r length(repeats)` locations (`r repeats`) surveyed each year. A detailed list of all survey years can be found in Table 1 (@tbl-loc-summary) and illustrated in Figure 1 (@fig-locs). ARUs were deployed at the beginning of the breeding season in April-May, and rotated locations until their final retrieval in July-August. The ARUs were set to record for []. On average, each ARU recorded for `r average_deployment$mean` +/- `r average_deployment$sd` days.
+Locations were surveyed on rotation with `r length(repeats)` locations (`r repeats`) surveyed each year. A detailed list of all survey years can be found in Table 1 (@tbl-loc-summary) and illustrated in Figure 1 (@fig-locs). ARUs were deployed at the beginning of the breeding season in April-May, and rotated locations until their final retrieval in July-August. The ARUs were set to record for \[\]. On average, each ARU recorded for 
 
 ```{r}
 #| warning: false
@@ -118,6 +115,7 @@ Locations were surveyed on rotation with `r length(repeats)` locations (`r repea
 #| results: hide
 
 wbnp_locs <- wbnp_main |>
+  filter(!is.na(latitude)) |>
   mutate(year = lubridate::year(recording_date_time)) |>
   filter(!is.na(latitude)) |>
   select(location, latitude, longitude, year) |>
@@ -137,6 +135,7 @@ repeats <- wbnp_locs |>
 ```
 
 ## Data collection and management
+
 
 ```{r, echo=F}
 #| warning: false
@@ -183,25 +182,87 @@ map
 
 ## Community data processing
 
-## Visual scanning
+The principal goal for data processing was to describe the acoustic community of species heard at locations while choosing a large enough subset of recordings for analyses. To ensure balanced replication, for each location and year surveyed, four randomly selected recordings were processed for 3-minutes between the hours of 4:00 AM - 7:59 AM ideally on four separate dates (see @tbl-loc-repl), and four recordings during the dusk hours (19:00 - 23:00) for nocturnal vocalizing species. Four recordings will ensure that we have the minimum number of samples for a simple occupancy analysis (@mackenzie2002estimating and @imperfect-occu). Tags are made using count-removal (see @farnsworth2002removal, @time-removal) where tags are only made at the time of first detection of each individual heard on the recordings. In case a species was overly abundant a TMTT ('too many to tag') flag was used (see @tbl-tmtt). `r round(nrow(tmtt_tags)/nrow(wbnp_main),2)*100`% of the total tags were TMTT but were subsequently converted to numeric using `wildRtrax::wt_replace_tmtt`. We also verified that all tags that were created were checked by a second observer (n = `r verified_tags |> select(Proportion) |> slice(3) |> pull()`) to ensure accuracy of detections (see @tbl-verified). Amphibian abundance was estimated at the time of first detection using the [North American Amphibian Monitoring Program](https://www.usgs.gov/centers/eesc/science/north-american-amphibian-monitoring-program) with abundance of species being estimated on the scale of "calling intensity index" (CI) of 1 - 3. Mammals such as Red Squirrel, were also noted on the recordings. After the data are processed in WildTrax, the [wildRtrax](https://abbiodiversity.github.io/wildRtrax/) package is use to download the data into a standard format prepared for analysis. The `wt_download_report` function downloads the data directly to a R framework for easy manipulation (see [wildRtrax APIs](https://abbiodiversity.github.io/wildRtrax/articles/apis.html)).
 
-## Automated recognition
+```{r}
+#| warning: false
+#| echo: false
+#| message: false
+#| eval: false
+#| include: true
+#| label: tbl-verified
+#| tbl-cap: Proportion of tags verified
 
----
+all_tags <- wbnp_main |> 
+  tally() |>
+  pull()
+
+verified_tags <- wbnp_main |>
+  group_by(tag_is_verified) |>
+  tally() |>
+  mutate(Proportion = round(n / all_tags,4)*100) |>
+  rename("Count" = n) |>
+  rename("Tag is verified" = tag_is_verified)
+
+kable(verified_tags)
+```
+
+```{r}
+#| warning: false
+#| echo: false
+#| message: false
+#| eval: false
+#| include: true
+#| label: tbl-tmtt
+#| tbl-cap: TMTT tags
+
+tmtt_tags <- wbnp_main |>
+  select(location, recording_date_time, species_code, individual_count) |>
+  distinct() |>
+  filter(individual_count == "TMTT")
+
+kable(head(tmtt_tags))
+
+```
+
+------------------------------------------------------------------------
 
 # Results
 
-## Avian species
+## Species richness
 
-### Species richness
+A total of `r nrow(distinct_spp)` species were found across the five years. @fig-spp-rich-locs describes the relationship of species richness across each location and survey year with @fig-spp-rich-annual showing the relationship between species richness and survey effort.
 
-### Species diversity 
+```{r}
+#| warning: false
+#| message: false
+#| echo: false
+#| eval: false
+#| include: false
 
-### Species occupancy
+spp_rich_location <- wbnp_main |>
+  as_tibble() |>
+  wt_tidy_species(remove = c("mammal","amphibian","abiotic","insect","unknown"), zerofill = T) |>
+  mutate(year = lubridate::year(recording_date_time)) |>
+  select(location, year, species_code) |>
+  distinct() |>
+  group_by(location, year) |>
+  summarise(species_count = n_distinct(species_code)) |>
+  ungroup()
 
-## Visual scanning
+distinct_spp <- wbnp_main |>
+  as_tibble() |>
+  wt_tidy_species(remove = c("mammal","amphibian","abiotic","insect","unknown"), zerofill = T) |>
+  mutate(year = lubridate::year(recording_date_time)) |>
+  select(species_code) |>
+  distinct() |>
+  arrange(species_code)
 
-## Amphibians
+```
+
+
+## Species diversity
+
+## Species occupancy
 
 # Discussion
-

@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex MacPhail">
+<meta name="dcterms.date" content="2024-05-29">
 
-<title>Report on the use of passive acoustic monitoring for evaluating ecological integrity in Wood Buffalo National Park</title>
+<title>Report on the use of passive acoustic monitoring in Wood Buffalo National Park</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,7 +22,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="wbnp-forest_files/libs/clipboard/clipboard.min.js"></script>
@@ -34,6 +54,20 @@ ul.task-list li input[type="checkbox"] {
 <script src="wbnp-forest_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="wbnp-forest_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="wbnp-forest_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="wbnp-forest_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="wbnp-forest_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="wbnp-forest_files/libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="wbnp-forest_files/libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="wbnp-forest_files/libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="wbnp-forest_files/libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="wbnp-forest_files/libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="wbnp-forest_files/libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="wbnp-forest_files/libs/leaflet-binding-2.2.1/leaflet.js"></script>
+<link href="wbnp-forest_files/libs/leaflet-measure-2.1.7/leaflet-measure.css" rel="stylesheet">
+<script src="wbnp-forest_files/libs/leaflet-measure-2.1.7/leaflet-measure.min.js"></script>
+<link href="wbnp-forest_files/libs/leaflet-minimap-3.3.1/Control.MiniMap.min.css" rel="stylesheet">
+<script src="wbnp-forest_files/libs/leaflet-minimap-3.3.1/Control.MiniMap.min.js"></script>
+<script src="wbnp-forest_files/libs/leaflet-minimap-3.3.1/Minimap-binding.js"></script>
 
 
 </head>
@@ -47,37 +81,30 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
+  <li><a href="#land-acknowledgement" id="toc-land-acknowledgement" class="nav-link" data-scroll-target="#land-acknowledgement">Land Acknowledgement</a></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
   <ul class="collapse">
-  <li><a href="#data-collection" id="toc-data-collection" class="nav-link" data-scroll-target="#data-collection">Data collection</a></li>
-  <li><a href="#data-management" id="toc-data-management" class="nav-link" data-scroll-target="#data-management">Data management</a></li>
+  <li><a href="#data-collection-and-management" id="toc-data-collection-and-management" class="nav-link" data-scroll-target="#data-collection-and-management">Data collection and management</a></li>
   <li><a href="#community-data-processing" id="toc-community-data-processing" class="nav-link" data-scroll-target="#community-data-processing">Community data processing</a></li>
-  <li><a href="#visual-scanning" id="toc-visual-scanning" class="nav-link" data-scroll-target="#visual-scanning">Visual scanning</a></li>
-  <li><a href="#automated-recognition" id="toc-automated-recognition" class="nav-link" data-scroll-target="#automated-recognition">Automated recognition</a></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
-  <ul class="collapse">
-  <li><a href="#avian-species" id="toc-avian-species" class="nav-link" data-scroll-target="#avian-species">Avian species</a>
   <ul class="collapse">
   <li><a href="#species-richness" id="toc-species-richness" class="nav-link" data-scroll-target="#species-richness">Species richness</a></li>
   <li><a href="#species-diversity" id="toc-species-diversity" class="nav-link" data-scroll-target="#species-diversity">Species diversity</a></li>
   <li><a href="#species-occupancy" id="toc-species-occupancy" class="nav-link" data-scroll-target="#species-occupancy">Species occupancy</a></li>
   </ul></li>
-  <li><a href="#visual-scanning-1" id="toc-visual-scanning-1" class="nav-link" data-scroll-target="#visual-scanning-1">Visual scanning</a></li>
-  <li><a href="#amphibians" id="toc-amphibians" class="nav-link" data-scroll-target="#amphibians">Amphibians</a></li>
-  </ul></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="wbnp-forest.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+</nav>
 </div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
 </div>
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Report on the use of passive acoustic monitoring for evaluating ecological integrity in Wood Buffalo National Park</h1>
+<h1 class="title">Report on the use of passive acoustic monitoring in Wood Buffalo National Park</h1>
 </div>
 
 
@@ -94,7 +121,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Invalid Date</p>
+      <p class="date">May 29, 2024</p>
     </div>
   </div>
   
@@ -104,56 +131,101 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<div class="quarto-figure quarto-figure-center" style="float:left`;">
+<figure class="figure">
+<p><img src="wbnp-banner.jpg" class="img-fluid figure-img" alt="Photo of a glacier"></p>
+</figure>
+</div>
 <section id="abstract" class="level1">
 <h1>Abstract</h1>
-<hr>
+<p>Passive acoustic monitoring has proven to be a valuable tool for monitoring vocalizing species. Environmental sensors are becoming increasingly easy to program and can autonomously generate extensive data sets of the soundscape, becoming an invaluable resource for ecological integrity monitoring. Wood Buffalo National Park deployed autonomous recording units (ARUs) across 66 locations during a comprehensive five-year survey. ARUs detected a total of 129 species including birds, amphibians and mammals. The analysis revealed</p>
 </section>
-<section id="introduction" class="level1">
+<section id="land-acknowledgement" class="level1">
+<h1>Land Acknowledgement</h1>
+<p>In the spirit of Reconciliation, we respectfully acknowledge that the lands of Wood Buffalo National Park where this study took place are the traditional territories of the Mikisew Cree First Nation, Athabasca Chipewyan First Nation, Fort Chipewyan Métis, Salt River First Nation, K’atl’odeeche First Nation, Deninu Kue First Nation, Fort Smith Métis Council, Hay River Métis Council, and the Fort Resolution Métis Council.</p>
+</section>
+<section id="introduction" class="level1 page-columns page-full">
 <h1>Introduction</h1>
-<hr>
+<p>Human activities have been identified as key pressures and contributors to the global decline in forest wildlife (<span class="citation" data-cites="allan2017recent">Allan et al. (<a href="#ref-allan2017recent" role="doc-biblioref">2017</a>)</span>). The repercussions of habitat fragmentation (<span class="citation" data-cites="fahrig2003effects">Fahrig (<a href="#ref-fahrig2003effects" role="doc-biblioref">2003</a>)</span>) and loss (<span class="citation" data-cites="hanski2011habitat">Hanski (<a href="#ref-hanski2011habitat" role="doc-biblioref">2011</a>)</span>), climate change (<span class="citation" data-cites="mantyka2012interactions">Mantyka-pringle, Martin, and Rhodes (<a href="#ref-mantyka2012interactions" role="doc-biblioref">2012</a>)</span>, <span class="citation" data-cites="sattar2021review">Sattar et al. (<a href="#ref-sattar2021review" role="doc-biblioref">2021</a>)</span>, <span class="citation" data-cites="abrahms2023climate">Abrahms et al. (<a href="#ref-abrahms2023climate" role="doc-biblioref">2023</a>)</span>), and increased access to sensitive areas exert direct and indirect pressures on forest biodiversity, particularly in managed regions in Canada (<span class="citation" data-cites="lemieux2011state">Lemieux et al. (<a href="#ref-lemieux2011state" role="doc-biblioref">2011</a>)</span>).</p>
+<div class="no-row-height column-margin column-container"><div id="ref-allan2017recent" class="csl-entry" role="listitem">
+Allan, James R, Oscar Venter, Sean Maxwell, Bastian Bertzky, Kendall Jones, Yichuan Shi, and James EM Watson. 2017. <span>“Recent Increases in Human Pressure and Forest Loss Threaten Many Natural World Heritage Sites.”</span> <em>Biological Conservation</em> 206: 47–55.
+</div><div id="ref-fahrig2003effects" class="csl-entry" role="listitem">
+Fahrig, Lenore. 2003. <span>“Effects of Habitat Fragmentation on Biodiversity.”</span> <em>Annual Review of Ecology, Evolution, and Systematics</em> 34 (1): 487–515.
+</div><div id="ref-hanski2011habitat" class="csl-entry" role="listitem">
+Hanski, Ilkka. 2011. <span>“Habitat Loss, the Dynamics of Biodiversity, and a Perspective on Conservation.”</span> <em>Ambio</em> 40 (3): 248–55.
+</div><div id="ref-mantyka2012interactions" class="csl-entry" role="listitem">
+Mantyka-pringle, Chrystal S, Tara G Martin, and Jonathan R Rhodes. 2012. <span>“Interactions Between Climate and Habitat Loss Effects on Biodiversity: A Systematic Review and Meta-Analysis.”</span> <em>Global Change Biology</em> 18 (4): 1239–52.
+</div><div id="ref-sattar2021review" class="csl-entry" role="listitem">
+Sattar, Q, ME Maqbool, R Ehsan, S Akhtar, Q Sattar, ME Maqbool, R Ehsan, and S Akhtar. 2021. <span>“Review on Climate Change and Its Effect on Wildlife and Ecosystem.”</span> <em>Open J Environ Biol</em> 6 (1): 008–14.
+</div><div id="ref-abrahms2023climate" class="csl-entry" role="listitem">
+Abrahms, Briana, Neil H Carter, TJ Clark-Wolf, Kaitlyn M Gaynor, Erik Johansson, Alex McInturff, Anna C Nisi, Kasim Rafiq, and Leigh West. 2023. <span>“Climate Change as a Global Amplifier of Human–Wildlife Conflict.”</span> <em>Nature Climate Change</em> 13 (3): 224–34.
+</div><div id="ref-lemieux2011state" class="csl-entry" role="listitem">
+Lemieux, Christopher J, Thomas J Beechey, Daniel J Scott, and Paul A Gray. 2011. <span>“The State of Climate Change Adaptation in Canada’s Protected Areas Sector.”</span> <em>The Canadian Geographer/Le G<span>é</span>ographe Canadien</em> 55 (3): 301–17.
+</div><div id="ref-aru-overview" class="csl-entry" role="listitem">
+Shonfield, Julia, and Erin M Bayne. 2017. <span>“Autonomous Recording Units in Avian Ecological Research: Current Use and Future Applications.”</span> <em>Avian Conservation &amp; Ecology</em> 12 (1).
+</div><div id="ref-lots-of-pam" class="csl-entry" role="listitem">
+Sugai, Larissa Sayuri Moreira, Thiago Sanna Freire Silva, Jr Ribeiro José Wagner, and Diego Llusia. 2018. <span>“<span class="nocase">Terrestrial Passive Acoustic Monitoring: Review and Perspectives</span>.”</span> <em>BioScience</em> 69 (1): 15–25. <a href="https://doi.org/10.1093/biosci/biy147">https://doi.org/10.1093/biosci/biy147</a>.
+</div></div><p>In 2018, Wood Buffalo National Park’s Forested Region initiated a program incorporating autonomous recording units (ARUs) for passive acoustic monitoring (PAM) of the Park’s wildlife. ARUs are compact environmental sensors that are designed to passively record the environment (<span class="citation" data-cites="aru-overview">Shonfield and Bayne (<a href="#ref-aru-overview" role="doc-biblioref">2017</a>)</span>), capturing vocalizing species like birds and amphibians, which is growing in use across the globe (<span class="citation" data-cites="lots-of-pam">Sugai et al. (<a href="#ref-lots-of-pam" role="doc-biblioref">2018</a>)</span>). This technology enables resource managers to conduct prolonged surveys with minimal human interference. The subsequent data collected by these units contribute valuable information to ecological integrity metrics such as species richness, diversity, occupancy, and trends over time. This data aids decision-making and management within the Park. Given the rapid and ease of accumulating data from these units, maintaining a high standard of data integrity is paramount to ensure future data interoperability and sharing. <a href="https://www.wildtrax.ca">WildTrax</a> is an online platform developed by the <a href="https://abmi.ca">Alberta Biodiversity Monitoring Institute (<strong>ABMI</strong>)</a> for users of environmental sensors to help addresses these big data challenges by providing solutions to standardize, harmonize, and share data.</p>
+<p>The objectives of this report are to:</p>
+<ul>
+<li>Describe the data management and processing procedures for the acoustic data collected from 2018 to 2023;</li>
+<li>Utilize traditional human tagging, visual scanning and automated recognition techniques to detect and count species and individuals heard on recordings;</li>
+<li>Define straightforward methods for evaluating species presence, species richness, and species occupancy over time at various locations; * Offer recommendations for ongoing monitoring approaches to contribute to the assessment of ecological integrity in forest ecosystems;</li>
+<li>Facilitate data publication to the public, resource managers, academic institutions, and any other relevant agencies</li>
+</ul>
 </section>
-<section id="methods" class="level1">
+<section id="methods" class="level1 page-columns page-full">
 <h1>Methods</h1>
-<section id="data-collection" class="level2">
-<h2 class="anchored" data-anchor-id="data-collection">Data collection</h2>
+<p>Data were collected during the spring and summer seasons from 2018 to 2023. A total of 66 locations were surveyed over the five-year period:</p>
+<p>Locations were surveyed on rotation with 0 locations () surveyed each year. A detailed list of all survey years can be found in Table 1 (<strong>?@tbl-loc-summary</strong>) and illustrated in Figure 1 (<a href="#fig-locs">Figure&nbsp;1</a>). ARUs were deployed at the beginning of the breeding season in April-May, and rotated locations until their final retrieval in July-August. The ARUs were set to record for []. On average, each ARU recorded for</p>
+<section id="data-collection-and-management" class="level2">
+<h2 class="anchored" data-anchor-id="data-collection-and-management">Data collection and management</h2>
+<div class="cell" data-layout-align="center">
+<div id="fig-locs" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-d741306e5ca0792ecc67" style="width:100%;height:650px;"></div>
+<script type="application/json" data-for="htmlwidget-d741306e5ca0792ecc67">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addMeasure","args":[{"position":"topright","primaryLengthUnit":"feet","primaryAreaUnit":"acres","activeColor":"#ABE67E","completedColor":"#C8F2BE","popupOptions":{"className":"leaflet-measure-resultpopup","autoPanPadding":[10,10]},"captureZIndex":10000,"localization":"en","decPoint":".","thousandsSep":","}]},{"method":"addMiniMap","args":[null,null,"bottomleft",150,150,19,19,-5,false,false,false,false,false,false,{"color":"#ff7800","weight":1,"clickable":false},{"color":"#000000","weight":1,"clickable":false,"opacity":0,"fillOpacity":0},{"hideText":"Hide MiniMap","showText":"Show MiniMap"},[]]},{"method":"addCircleMarkers","args":[[59.72194,59.71985,59.72566,59.72876,60.05324,60.05632,60.05957,60.05622,60.02869,60.07369,60.07375,59.52209,59.5297,59.52709,59.52206,59.51748,59.51761,59.50494,59.50499,59.50199,59.50174,59.53012,59.81016,59.80611,59.80625,59.79486,60.13398,59.72667,59.95452,59.73086,59.72929,59.72506,59.70211,59.70666,59.7114,59.71576,59.95413,59.45677,59.35662,59.34777,59.30383,59.58572,59.78506,59.58308,59.57945,59.58239,59.7932,59.79898,59.80123,59.79016,59.79478,59.77338,59.77615,59.96645,59.96233],[-111.54823,-111.5564,-111.55397,-111.56017,-113.29527,-113.28933,-113.29544,-113.30203,-113.08873,-113.31947,-113.32622,-112.22572,-112.18946,-112.17796,-112.23457,-112.23447,-112.22527,-112.19962,-112.20855,-112.18796,-112.19749,-112.18115,-112.02818,-112.02176,-112.0302,-111.98077,-113.6765,-112.18998,-112.44991,-112.18694,-112.1785,-112.18153,-112.1725,-112.1701,-112.17068,-112.16903,-112.45889,-112.31653,-112.47673,-112.47235,-112.46995,-112.26004,-112.06429,-112.25515,-112.25938,-112.26594,-112.02072,-112.03416,-112.02332,-112.03042,-112.03838,-112.09245,-112.09382,-112.39746,-112.40363],5,null,"2018",{"interactive":true,"className":"","stroke":true,"color":["#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF"],"weight":5,"opacity":0.5,"fill":true,"fillColor":["#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF","#4C00FF"],"fillOpacity":0.2},null,null,["Location: WBNP-HAY-1 <br>Year: 2018","Location: WBNP-HAY-2 <br>Year: 2018","Location: WBNP-HAY-3 <br>Year: 2018","Location: WBNP-HAY-4 <br>Year: 2018","Location: WBNP-HWY-1 <br>Year: 2018","Location: WBNP-HWY-2 <br>Year: 2018","Location: WBNP-HWY-3 <br>Year: 2018","Location: WBNP-HWY-4 <br>Year: 2018","Location: WBNP-HWY-5 <br>Year: 2018","Location: WBNP-HWY-7 <br>Year: 2018","Location: WBNP-HWY-8 <br>Year: 2018","Location: WBNP-LALA-1 <br>Year: 2018","Location: WBNP-LALA-10 <br>Year: 2018","Location: WBNP-LALA-11 <br>Year: 2018","Location: WBNP-LALA-2 <br>Year: 2018","Location: WBNP-LALA-3 <br>Year: 2018","Location: WBNP-LALA-4 <br>Year: 2018","Location: WBNP-LALA-5 <br>Year: 2018","Location: WBNP-LALA-6 <br>Year: 2018","Location: WBNP-LALA-7 <br>Year: 2018","Location: WBNP-LALA-8 <br>Year: 2018","Location: WBNP-LALA-9 <br>Year: 2018","Location: WBNP-LOOP-1 <br>Year: 2018","Location: WBNP-LOOP-2 <br>Year: 2018","Location: WBNP-LOOP-3 <br>Year: 2018","Location: WBNP-LOOP-4 <br>Year: 2018","Location: WBNP-M99-1 <br>Year: 2018","Location: WBNP-PARS-1 <br>Year: 2018","Location: WBNP-PARS-10 <br>Year: 2018","Location: WBNP-PARS-2 <br>Year: 2018","Location: WBNP-PARS-3 <br>Year: 2018","Location: WBNP-PARS-4 <br>Year: 2018","Location: WBNP-PARS-5 <br>Year: 2018","Location: WBNP-PARS-6 <br>Year: 2018","Location: WBNP-PARS-7 <br>Year: 2018","Location: WBNP-PARS-8 <br>Year: 2018","Location: WBNP-PARS-9 <br>Year: 2018","Location: WBNP-PCPT-1 <br>Year: 2018","Location: WBNP-PCPT-2 <br>Year: 2018","Location: WBNP-PCPT-3 <br>Year: 2018","Location: WBNP-PCPT-4 <br>Year: 2018","Location: WBNP-PLRD-1 <br>Year: 2018","Location: WBNP-PLRD-10 <br>Year: 2018","Location: WBNP-PLRD-2 <br>Year: 2018","Location: WBNP-PLRD-3 <br>Year: 2018","Location: WBNP-PLRD-4 <br>Year: 2018","Location: WBNP-PLRD-5 <br>Year: 2018","Location: WBNP-PLRD-6 <br>Year: 2018","Location: WBNP-PLRD-7 <br>Year: 2018","Location: WBNP-PLRD-8 <br>Year: 2018","Location: WBNP-PLRD-9 <br>Year: 2018","Location: WBNP-RAIN-1 <br>Year: 2018","Location: WBNP-RAIN-2 <br>Year: 2018","Location: WBNP-SAPL-1 <br>Year: 2018","Location: WBNP-SAPL-2 <br>Year: 2018"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[59.72194,59.71985,59.72566,59.72876,60.15802,60.15857,59.95452,59.94976],[-111.54823,-111.5564,-111.55397,-111.56017,-113.72076,-113.71175,-112.44991,-112.45798],5,null,"2019",{"interactive":true,"className":"","stroke":true,"color":["#004CFF","#004CFF","#004CFF","#004CFF","#004CFF","#004CFF","#004CFF","#004CFF"],"weight":5,"opacity":0.5,"fill":true,"fillColor":["#004CFF","#004CFF","#004CFF","#004CFF","#004CFF","#004CFF","#004CFF","#004CFF"],"fillOpacity":0.2},null,null,["Location: WBNP-HAY-1 <br>Year: 2019","Location: WBNP-HAY-2 <br>Year: 2019","Location: WBNP-HAY-3 <br>Year: 2019","Location: WBNP-HAY-4 <br>Year: 2019","Location: WBNP-HWY-11 <br>Year: 2019","Location: WBNP-HWY-12 <br>Year: 2019","Location: WBNP-PARS-10 <br>Year: 2019","Location: WBNP-PARS-11 <br>Year: 2019"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[60.05324,60.05632,60.05957,60.05622,59.52209,59.52206,59.51748,59.51761,59.81016,59.80611,59.79486,59.79133,59.80189,59.80333,59.79855,60.13398,60.11908,60.11469,60.11489,59.72667,59.95452,59.94976,59.95015,59.73086,59.72929,59.72506,59.70211,59.70666,59.7114,59.71576,59.95413,59.58572,59.58308,59.57945,59.58239],[-113.29527,-113.28933,-113.29544,-113.30203,-112.22572,-112.23457,-112.23447,-112.22527,-112.02818,-112.02176,-111.98077,-111.97535,-111.99689,-111.9886,-111.98492,-113.6765,-113.662568,-113.66326,-113.6722,-112.18998,-112.44991,-112.45798,-112.44922,-112.18694,-112.1785,-112.18153,-112.1725,-112.1701,-112.17068,-112.16903,-112.45889,-112.26004,-112.25515,-112.25938,-112.26594],5,null,"2021",{"interactive":true,"className":"","stroke":true,"color":["#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF"],"weight":5,"opacity":0.5,"fill":true,"fillColor":["#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF","#00E5FF"],"fillOpacity":0.2},null,null,["Location: WBNP-HWY-1 <br>Year: 2021","Location: WBNP-HWY-2 <br>Year: 2021","Location: WBNP-HWY-3 <br>Year: 2021","Location: WBNP-HWY-4 <br>Year: 2021","Location: WBNP-LALA-1 <br>Year: 2021","Location: WBNP-LALA-2 <br>Year: 2021","Location: WBNP-LALA-3 <br>Year: 2021","Location: WBNP-LALA-4 <br>Year: 2021","Location: WBNP-LOOP-1 <br>Year: 2021","Location: WBNP-LOOP-2 <br>Year: 2021","Location: WBNP-LOOP-4 <br>Year: 2021","Location: WBNP-LOOP-5 <br>Year: 2021","Location: WBNP-LOOP-6 <br>Year: 2021","Location: WBNP-LOOP-7 <br>Year: 2021","Location: WBNP-LOOP-8 <br>Year: 2021","Location: WBNP-M99-1 <br>Year: 2021","Location: WBNP-M99-2 <br>Year: 2021","Location: WBNP-M99-3 <br>Year: 2021","Location: WBNP-M99-4 <br>Year: 2021","Location: WBNP-PARS-1 <br>Year: 2021","Location: WBNP-PARS-10 <br>Year: 2021","Location: WBNP-PARS-11 <br>Year: 2021","Location: WBNP-PARS-12 <br>Year: 2021","Location: WBNP-PARS-2 <br>Year: 2021","Location: WBNP-PARS-3 <br>Year: 2021","Location: WBNP-PARS-4 <br>Year: 2021","Location: WBNP-PARS-5 <br>Year: 2021","Location: WBNP-PARS-6 <br>Year: 2021","Location: WBNP-PARS-7 <br>Year: 2021","Location: WBNP-PARS-8 <br>Year: 2021","Location: WBNP-PARS-9 <br>Year: 2021","Location: WBNP-PLRD-1 <br>Year: 2021","Location: WBNP-PLRD-2 <br>Year: 2021","Location: WBNP-PLRD-3 <br>Year: 2021","Location: WBNP-PLRD-4 <br>Year: 2021"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[59.72194,59.71985,59.72566,59.72876,60.05632,60.05957,60.05622,59.52209,59.52206,59.51748,59.51761,59.50494,59.50499,59.50199,59.50174,59.81016,59.80611,59.80625,59.79486,59.79133,59.80189,59.80333,59.79855,60.13398,60.11908,60.11469,60.11489,59.72667,59.95452,59.94976,59.95015,59.73086,59.72929,59.72506,59.70211,59.70666,59.7114,59.71576,59.95413,59.58572,59.58308,59.57945,59.58239,59.96645,59.96233],[-111.54823,-111.5564,-111.55397,-111.56017,-113.28933,-113.29544,-113.30203,-112.22572,-112.23457,-112.23447,-112.22527,-112.19962,-112.20855,-112.18796,-112.19749,-112.02818,-112.02176,-112.0302,-111.98077,-111.97535,-111.99689,-111.9886,-111.98492,-113.6765,-113.662568,-113.66326,-113.6722,-112.18998,-112.44991,-112.45798,-112.44922,-112.18694,-112.1785,-112.18153,-112.1725,-112.1701,-112.17068,-112.16903,-112.45889,-112.26004,-112.25515,-112.25938,-112.26594,-112.39746,-112.40363],5,null,"2022",{"interactive":true,"className":"","stroke":true,"color":["#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D"],"weight":5,"opacity":0.5,"fill":true,"fillColor":["#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D","#00FF4D"],"fillOpacity":0.2},null,null,["Location: WBNP-HAY-1 <br>Year: 2022","Location: WBNP-HAY-2 <br>Year: 2022","Location: WBNP-HAY-3 <br>Year: 2022","Location: WBNP-HAY-4 <br>Year: 2022","Location: WBNP-HWY-2 <br>Year: 2022","Location: WBNP-HWY-3 <br>Year: 2022","Location: WBNP-HWY-4 <br>Year: 2022","Location: WBNP-LALA-1 <br>Year: 2022","Location: WBNP-LALA-2 <br>Year: 2022","Location: WBNP-LALA-3 <br>Year: 2022","Location: WBNP-LALA-4 <br>Year: 2022","Location: WBNP-LALA-5 <br>Year: 2022","Location: WBNP-LALA-6 <br>Year: 2022","Location: WBNP-LALA-7 <br>Year: 2022","Location: WBNP-LALA-8 <br>Year: 2022","Location: WBNP-LOOP-1 <br>Year: 2022","Location: WBNP-LOOP-2 <br>Year: 2022","Location: WBNP-LOOP-3 <br>Year: 2022","Location: WBNP-LOOP-4 <br>Year: 2022","Location: WBNP-LOOP-5 <br>Year: 2022","Location: WBNP-LOOP-6 <br>Year: 2022","Location: WBNP-LOOP-7 <br>Year: 2022","Location: WBNP-LOOP-8 <br>Year: 2022","Location: WBNP-M99-1 <br>Year: 2022","Location: WBNP-M99-2 <br>Year: 2022","Location: WBNP-M99-3 <br>Year: 2022","Location: WBNP-M99-4 <br>Year: 2022","Location: WBNP-PARS-1 <br>Year: 2022","Location: WBNP-PARS-10 <br>Year: 2022","Location: WBNP-PARS-11 <br>Year: 2022","Location: WBNP-PARS-12 <br>Year: 2022","Location: WBNP-PARS-2 <br>Year: 2022","Location: WBNP-PARS-3 <br>Year: 2022","Location: WBNP-PARS-4 <br>Year: 2022","Location: WBNP-PARS-5 <br>Year: 2022","Location: WBNP-PARS-6 <br>Year: 2022","Location: WBNP-PARS-7 <br>Year: 2022","Location: WBNP-PARS-8 <br>Year: 2022","Location: WBNP-PARS-9 <br>Year: 2022","Location: WBNP-PLRD-1 <br>Year: 2022","Location: WBNP-PLRD-2 <br>Year: 2022","Location: WBNP-PLRD-3 <br>Year: 2022","Location: WBNP-PLRD-4 <br>Year: 2022","Location: WBNP-SAPL-1 <br>Year: 2022","Location: WBNP-SAPL-2 <br>Year: 2022"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[59.72194,59.71985,59.72566,59.72876,60.05324,60.05632,60.05957,60.05622,60.13398,60.11908,60.11469,60.11489],[-111.54823,-111.5564,-111.55397,-111.56017,-113.29527,-113.28933,-113.29544,-113.30203,-113.6765,-113.662568,-113.66326,-113.6722],5,null,"2023",{"interactive":true,"className":"","stroke":true,"color":["#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFF00"],"weight":5,"opacity":0.5,"fill":true,"fillColor":["#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFF00"],"fillOpacity":0.2},null,null,["Location: WBNP-HAY-1 <br>Year: 2023","Location: WBNP-HAY-2 <br>Year: 2023","Location: WBNP-HAY-3 <br>Year: 2023","Location: WBNP-HAY-4 <br>Year: 2023","Location: WBNP-HWY-1 <br>Year: 2023","Location: WBNP-HWY-2 <br>Year: 2023","Location: WBNP-HWY-3 <br>Year: 2023","Location: WBNP-HWY-4 <br>Year: 2023","Location: WBNP-M99-1 <br>Year: 2023","Location: WBNP-M99-2 <br>Year: 2023","Location: WBNP-M99-3 <br>Year: 2023","Location: WBNP-M99-4 <br>Year: 2023"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLayersControl","args":[[],["2018","2019","2021","2022","2023"],{"collapsed":false,"autoZIndex":true,"position":"topright"}]}],"limits":{"lat":[59.30383,60.15857],"lng":[-113.72076,-111.54823]}},"evals":[],"jsHooks":[]}</script>
+<figcaption class="figure-caption">Figure&nbsp;1: ARU survey locations</figcaption>
+</figure>
+</div>
+</div>
 </section>
-<section id="data-management" class="level2">
-<h2 class="anchored" data-anchor-id="data-management">Data management</h2>
-</section>
-<section id="community-data-processing" class="level2">
+<section id="community-data-processing" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="community-data-processing">Community data processing</h2>
-</section>
-<section id="visual-scanning" class="level2">
-<h2 class="anchored" data-anchor-id="visual-scanning">Visual scanning</h2>
-</section>
-<section id="automated-recognition" class="level2">
-<h2 class="anchored" data-anchor-id="automated-recognition">Automated recognition</h2>
+<p>The principal goal for data processing was to describe the acoustic community of species heard at locations while choosing a large enough subset of recordings for analyses. To ensure balanced replication, for each location and year surveyed, four randomly selected recordings were processed for 3-minutes between the hours of 4:00 AM - 7:59 AM ideally on four separate dates (see <strong>?@tbl-loc-repl</strong>), and four recordings during the dusk hours (19:00 - 23:00) for nocturnal vocalizing species. Four recordings will ensure that we have the minimum number of samples for a simple occupancy analysis (<span class="citation" data-cites="mackenzie2002estimating">Darryl I. MacKenzie et al. (<a href="#ref-mackenzie2002estimating" role="doc-biblioref">2002</a>)</span> and <span class="citation" data-cites="imperfect-occu">Darryl I. MacKenzie et al. (<a href="#ref-imperfect-occu" role="doc-biblioref">2003</a>)</span>). Tags are made using count-removal (see <span class="citation" data-cites="farnsworth2002removal">Farnsworth et al. (<a href="#ref-farnsworth2002removal" role="doc-biblioref">2002</a>)</span>, <span class="citation" data-cites="time-removal">Sólymos et al. (<a href="#ref-time-removal" role="doc-biblioref">2018</a>)</span>) where tags are only made at the time of first detection of each individual heard on the recordings. In case a species was overly abundant a TMTT (‘too many to tag’) flag was used (see <strong>?@tbl-tmtt</strong>). 2% of the total tags were TMTT but were subsequently converted to numeric using <code>wildRtrax::wt_replace_tmtt</code>. We also verified that all tags that were created were checked by a second observer (n = 0.44) to ensure accuracy of detections (see <strong>?@tbl-verified</strong>). Amphibian abundance was estimated at the time of first detection using the <a href="https://www.usgs.gov/centers/eesc/science/north-american-amphibian-monitoring-program">North American Amphibian Monitoring Program</a> with abundance of species being estimated on the scale of “calling intensity index” (CI) of 1 - 3. Mammals such as Red Squirrel, were also noted on the recordings. After the data are processed in WildTrax, the <a href="https://abbiodiversity.github.io/wildRtrax/">wildRtrax</a> package is use to download the data into a standard format prepared for analysis. The <code>wt_download_report</code> function downloads the data directly to a R framework for easy manipulation (see <a href="https://abbiodiversity.github.io/wildRtrax/articles/apis.html">wildRtrax APIs</a>).</p>
+<div class="no-row-height column-margin column-container"><div id="ref-mackenzie2002estimating" class="csl-entry" role="listitem">
+MacKenzie, Darryl I, James D Nichols, Gideon B Lachman, Sam Droege, J Andrew Royle, and Catherine A Langtimm. 2002. <span>“Estimating Site Occupancy Rates When Detection Probabilities Are Less Than One.”</span> <em>Ecology</em> 83 (8): 2248–55.
+</div><div id="ref-imperfect-occu" class="csl-entry" role="listitem">
+MacKenzie, Darryl I., James D. Nichols, James E. Hines, Melinda G. Knutson, and Alan B. Franklin. 2003. <span>“ESTIMATING SITE OCCUPANCY, COLONIZATION, AND LOCAL EXTINCTION WHEN a SPECIES IS DETECTED IMPERFECTLY.”</span> <em>Ecology</em> 84 (8): 2200–2207. https://doi.org/<a href="https://doi.org/10.1890/02-3090">https://doi.org/10.1890/02-3090</a>.
+</div><div id="ref-farnsworth2002removal" class="csl-entry" role="listitem">
+Farnsworth, George L, Kenneth H Pollock, James D Nichols, Theodore R Simons, James E Hines, and John R Sauer. 2002. <span>“A Removal Model for Estimating Detection Probabilities from Point-Count Surveys.”</span> <em>The Auk</em> 119 (2): 414–25.
+</div><div id="ref-time-removal" class="csl-entry" role="listitem">
+Sólymos, Péter, Steven M. Matsuoka, Steven G. Cumming, Diana Stralberg, Patricia Fontaine, Fiona K. A. Schmiegelow, Samantha J. Song, and Erin M. Bayne. 2018. <span>“<span class="nocase">Evaluating time-removal models for estimating availability of boreal birds during point count surveys: Sample size requirements and model complexity</span>.”</span> <em>The Condor</em> 120 (4): 765–86. <a href="https://doi.org/10.1650/CONDOR-18-32.1">https://doi.org/10.1650/CONDOR-18-32.1</a>.
+</div></div><div id="tbl-verified" class="cell tbl-parent quarto-layout-panel anchored" data-tbl-cap="Proportion of tags verified">
+
+</div>
+<div id="tbl-tmtt" class="cell tbl-parent quarto-layout-panel anchored" data-tbl-cap="TMTT tags">
+
+</div>
 <hr>
 </section>
 </section>
 <section id="results" class="level1">
 <h1>Results</h1>
-<section id="avian-species" class="level2">
-<h2 class="anchored" data-anchor-id="avian-species">Avian species</h2>
-<section id="species-richness" class="level3">
-<h3 class="anchored" data-anchor-id="species-richness">Species richness</h3>
+<section id="species-richness" class="level2">
+<h2 class="anchored" data-anchor-id="species-richness">Species richness</h2>
+<p>A total of 129 species were found across the five years. <strong>?@fig-spp-rich-locs</strong> describes the relationship of species richness across each location and survey year with <strong>?@fig-spp-rich-annual</strong> showing the relationship between species richness and survey effort.</p>
 </section>
-<section id="species-diversity" class="level3">
-<h3 class="anchored" data-anchor-id="species-diversity">Species diversity</h3>
+<section id="species-diversity" class="level2">
+<h2 class="anchored" data-anchor-id="species-diversity">Species diversity</h2>
 </section>
-<section id="species-occupancy" class="level3">
-<h3 class="anchored" data-anchor-id="species-occupancy">Species occupancy</h3>
-</section>
-</section>
-<section id="visual-scanning-1" class="level2">
-<h2 class="anchored" data-anchor-id="visual-scanning-1">Visual scanning</h2>
-</section>
-<section id="amphibians" class="level2">
-<h2 class="anchored" data-anchor-id="amphibians">Amphibians</h2>
+<section id="species-occupancy" class="level2">
+<h2 class="anchored" data-anchor-id="species-occupancy">Species occupancy</h2>
 </section>
 </section>
-<section id="discussion" class="level1">
-<h1>Discussion</h1>
+<section id="discussion" class="level1 unnumbered">
+<h1 class="unnumbered">Discussion</h1>
+
 </section>
 
 </main>
