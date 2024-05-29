@@ -45,6 +45,7 @@ library(ggpubr)
 library(vegan)
 library(MuMIn)
 library(AICcmodavg)
+library(leaflet)
 
 wt_auth()
 
@@ -118,6 +119,7 @@ Locations were surveyed on rotation with `r length(repeats)` locations (`r repea
 
 wbnp_locs <- wbnp_main |>
   mutate(year = lubridate::year(recording_date_time)) |>
+  filter(!is.na(latitude)) |>
   select(location, latitude, longitude, year) |>
   distinct() |>
   sf::st_as_sf(coords = c("longitude","latitude"), crs = 4326)
@@ -134,9 +136,50 @@ repeats <- wbnp_locs |>
 
 ```
 
-## Data collection
+## Data collection and management
 
-## Data management
+```{r, echo=F}
+#| warning: false
+#| echo: false
+#| eval: true
+#| message: false
+#| include: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 10
+#| fig-cap: ARU survey locations
+#| label: fig-locs
+
+# Create a leaflet map
+map <- leaflet(wbnp_locs) %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMeasure() %>%
+  addMiniMap(position = "bottomleft")
+
+# Add a layer for each year
+years <- unique(wbnp_locs$year)
+for (year in years) {
+  map <- map %>% addCircleMarkers(
+    data = filter(wbnp_locs, year == !!year),
+    radius = 5,  # Size of the circles
+    color = ~colorFactor(topo.colors(length(years)), domain = years)(year),
+    popup = ~paste("Location:", location, "<br>Year:", year),
+    group = as.character(year)
+  )
+}
+
+# Add layers control
+map <- map %>%
+  addLayersControl(
+    overlayGroups = as.character(years),
+    options = layersControlOptions(collapsed = FALSE)
+  )
+
+# Print the map
+map
+  
+```
+
 
 ## Community data processing
 
