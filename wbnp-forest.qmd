@@ -117,6 +117,7 @@ Locations were surveyed on rotation with `r length(repeats)` locations (`r repea
 wbnp_locs <- wbnp_main |>
   filter(!is.na(latitude)) |>
   mutate(year = lubridate::year(recording_date_time)) |>
+  filter(!is.na(latitude)) |>
   select(location, latitude, longitude, year) |>
   distinct() |>
   sf::st_as_sf(coords = c("longitude","latitude"), crs = 4326)
@@ -148,11 +149,33 @@ repeats <- wbnp_locs |>
 #| fig-cap: ARU survey locations
 #| label: fig-locs
 
-leaflet() %>%
+# Create a leaflet map
+map <- leaflet(wbnp_locs) %>%
   addTiles() %>%  # Add default OpenStreetMap map tiles
-  addMarkers(data = wbnp_locs, popup = paste("Location:", wbnp_locs$location, "<br>")) %>%
   addMeasure() %>%
   addMiniMap(position = "bottomleft")
+
+# Add a layer for each year
+years <- unique(wbnp_locs$year)
+for (year in years) {
+  map <- map %>% addCircleMarkers(
+    data = filter(wbnp_locs, year == !!year),
+    radius = 5,  # Size of the circles
+    color = ~colorFactor(topo.colors(length(years)), domain = years)(year),
+    popup = ~paste("Location:", location, "<br>Year:", year),
+    group = as.character(year)
+  )
+}
+
+# Add layers control
+map <- map %>%
+  addLayersControl(
+    overlayGroups = as.character(years),
+    options = layersControlOptions(collapsed = FALSE)
+  )
+
+# Print the map
+map
   
 ```
 
@@ -237,9 +260,484 @@ distinct_spp <- wbnp_main |>
 
 ```
 
+```{r}
+#| warning: false
+#| message: false
+#| echo: false
+#| eval: true
+#| include: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 10
+#| fig-cap: Species richness at forest monitoring locations across years
+#| label: fig-spp-rich-locs
+#| cap-location: margin
+
+spp_rich_location |>
+  ggplot(aes(x=year, y=species_count, colour=year)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(~location) +
+  theme_bw() +
+  scale_colour_viridis_c() +
+  xlab('Year') + ylab('Species richness') +
+  ggtitle('Species richness at each location surveyed for each year')
+
+```
+```{r}
+#| warning: false
+#| echo: false
+#| eval: true
+#| include: true
+#| results: hide
+
+spp_rich_annual <- wbnp_main |>
+  as_tibble() |>
+  wt_tidy_species(remove = c("mammal","amphibian","abiotic","insect","unknown"), zerofill = T) |>
+  mutate(year = lubridate::year(recording_date_time)) |>
+  select(location, year, species_code) |>
+  distinct() |>
+  group_by(year) |>
+  summarise(effort = n_distinct(species_code) / n_distinct(location),
+            species_count = n_distinct(species_code)) |>
+  ungroup()
+
+year_effort <- wbnp_main |>
+  mutate(year = lubridate::year(recording_date_time)) |>
+  group_by(year) |>
+  summarise(count_of_locs = n_distinct(location))
+```
+
+```{r}
+#| warning: false
+#| echo: false
+#| eval: true
+#| include: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 10
+#| fig-cap: Species richness at forest monitoring locations across years considering sampling effort
+#| label: fig-spp-rich-annual
+#| cap-location: margin
+
+spp_rich_annual_plot <- spp_rich_annual %>%
+  inner_join(., year_effort) %>%
+  ggplot(., aes(x = year)) +
+  geom_line(aes(y = species_count), size = 1) +
+  geom_bar(aes(y = count_of_locs * 5), alpha = 0.7, stat = "identity") +  # Adjust the multiplier for better visualization
+  scale_y_continuous(name = "Species Count", sec.axis = sec_axis(~./5, name = "Count of Locations")) +
+  labs(x = "Year") +
+  theme_bw()
+
+spp_rich_annual_plot
+
+```
+
+```{r}
+#| warning: false
+#| echo: false
+#| eval: true
+#| message: false
+#| include: true
+#| label: tbl-bird-guilds
+#| tbl-cap: Common bird forest species guilds. For nesting habitat; Ag = Agricultural, Be = Beach, Bo = Bog, CW = Coniferous Woodlands, ES = Early Successional, MW = Mixed Woodlands, OW = Open Woodlands, TSS = Treed/Shrubby Swamp, Ur = Urban. Species from CW, MW, OW, TSS were used for analysis.
+
+guilds <- read_csv("bird_guilds.csv") |>
+  select(species_common_name, habitat_nesting) |>
+  filter(habitat_nesting %in% c("CW","MW","OW","TSS")) 
+
+kable(guilds)
+
+```
+
+```{r}
+#| warning: false
+#| echo: false
+#| eval: true
+#| message: false
+#| include: true
+#| results: hide
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 10
+#| fig-cap: Seasonal detection activity of most commonly detected forest species
+#| label: fig-spp-activity
+#| cap-location: margin
+
+wbnp_main |>
+  wt_tidy_species(remove = c("mammal","amphibian","abiotic","insect","unknown"), zerofill = T) |>
+  select(location, recording_date_time, species_common_name, species_code, individual_count) |>
+  mutate(julian = lubridate::yday(recording_date_time),
+         month= month(recording_date_time),
+         year = factor(year(recording_date_time))) |>
+  inner_join(guilds |> select(species_common_name, habitat_nesting)) |>
+  arrange(species_code) |>
+  filter(habitat_nesting %in% c("CW","MW","OW","TSS")) |>
+  group_by(species_code) |>
+  add_tally() |>
+  ungroup() |>
+  filter(!n < 100) |>
+  mutate(habitat_nesting = case_when(
+    habitat_nesting == "CW" ~ "Coniferous Woodland",
+    habitat_nesting == "MW" ~ "Mixedwood",
+    habitat_nesting == "OW" ~ "Open Woodland",
+    habitat_nesting == "TSS" ~ "Tree Shrub / Swamp",
+    TRUE ~ as.character(habitat_nesting)
+  )) |>
+  rename("Nesting habitat" = habitat_nesting) |>
+  ggplot(aes(x = julian, y = species_common_name, fill = `Nesting habitat`)) + 
+  geom_density_ridges(scale = 3, rel_min_height = 0.005, alpha = 0.4) + 
+  scale_fill_viridis_d() +
+  facet_wrap(~year, nrow = 1) +
+  xlim(120,210) +
+  theme_bw() +
+  xlab("Day of Year") + 
+  ylab("Species")
+
+```
 
 ## Species diversity
 
+Shannon's diversity was stable based on results. (see @fig-shannon.)
+
+```{r}
+#| warning: false
+#| eval: false
+#| message: false
+#| include: false
+#| echo: false
+#| results: hide
+
+raw_dog <- wbnp_main |> 
+  as_tibble() |>
+  wt_tidy_species(remove = c("mammal","amphibian","abiotic","insect","unknown"), zerofill = T) |>
+  wt_replace_tmtt() |>
+  select(location, recording_date_time, species_code, species_common_name, individual_order, individual_count) |>
+  distinct() |>
+  group_by(location, recording_date_time, species_code, species_common_name) |>
+  summarise(count = max(individual_order)) |>
+  ungroup() |>
+  pivot_wider(names_from = species_code, values_from = count, values_fill = 0) |>
+  as.data.frame()
+
+shannon <- raw_dog |>
+  pivot_longer(cols = -(location:species_common_name), names_to = "species", values_to = "count") %>%
+  group_by(location, year = lubridate::year(recording_date_time), species) %>%
+  summarise(total_count = sum(count)) %>%
+  ungroup() %>%
+  filter(!total_count == 0) %>%
+  group_by(year) %>%
+  summarise(shannon_index = diversity(total_count, index = "shannon")) |>
+  ungroup() |>
+  ggplot(aes(x = year, y = shannon_index, color = year)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Shannon Diversity Index Over Years",
+       x = "Year",
+       y = "Shannon Diversity Index") +
+  theme_minimal() +
+  scale_colour_viridis_c() +
+  ylim(4,6)
+
+```
+
+```{r}
+#| warning: false
+#| echo: false
+#| eval: true
+#| include: true
+#| fig-width: 8
+#| fig-height: 8
+#| fig-cap: Shannon's diversity across years for all locations surveyed.
+#| label: fig-shannon
+#| fig-column: page-right
+
+shannon
+
+```
+
 ## Species occupancy
+
+We selected `` species to represent the forest songbird community into 4 separate habitat nesting guilds (see @tbl-bird-guilds): conifer (@fig-spp-occ-conifer), deciduous (@fig-spp-occ-decid), treed / shrubby (@fig-spp-occ-tss) and open (@fig-spp-occ-open). Analysis of species occupancy revealed diverse and varied changes across these species. Analytically, many models were singular, and a few exhibited overdispersion (indicated by *c-hat* in @tbl-c-hat), likely due to low detections or a limited sample size of spatial locations. Ubiquitous species such as [], demonstrated stable site occupancy across the years. Generalist species or those capable of capitalizing on utilizing mixed habitats, exemplified by [], also maintained consistent occupancy levels. The occurrence of [2023 fire] led to notable breakpoints in the occupancy of certain species: [RESULTS]
+
+```{r}
+#| warning: false
+#| echo: false
+#| eval: false
+#| include: true
+
+#wtsp_occ <- ss_occ_plot_loop(pei_main, "WTSP")
+#amro_occ <- ss_occ_plot_loop(pei_main, "AMRO")
+revi_occ <- ss_occ_plot_loop(pei_main, "REVI")
+#coye_occ <- ss_occ_plot_loop(pei_main, "COYE")
+amre_occ <- ss_occ_plot_loop(pei_main, "AMRE")
+btnw_occ <- ss_occ_plot_loop(pei_main, "BTNW")
+nopa_occ <- ss_occ_plot_loop(pei_main, "NOPA")
+#yewa_occ <- ss_occ_plot_loop(pei_main, "YEWA")
+mawa_occ <- ss_occ_plot_loop(pei_main, "MAWA")
+#sosp_occ <- ss_occ_plot_loop(pei_main, "SOSP")
+swth_occ <- ss_occ_plot_loop(pei_main, "SWTH")
+alfl_occ <- ss_occ_plot_loop(pei_main, "ALFL")
+yrwa_occ <- ss_occ_plot_loop(pei_main, "YRWA")
+baww_occ <- ss_occ_plot_loop(pei_main, "BAWW")
+bhvi_occ <- ss_occ_plot_loop(pei_main, "BHVI")
+blja_occ <- ss_occ_plot_loop(pei_main, "BLJA")
+#chsp_occ <- ss_occ_plot_loop(pei_main, "CHSP")
+btbw_occ <- ss_occ_plot_loop(pei_main, "BTBW")
+blbw_occ <- ss_occ_plot_loop(pei_main, "BLBW")
+gcki_occ <- ss_occ_plot_loop(pei_main, "GCKI")
+#wiwr_occ <- ss_occ_plot_loop(pei_main, "WIWR")
+#rbnu_occ <- ss_occ_plot_loop(pei_main, "RBNU")
+#brcr_occ <- ss_occ_plot_loop(pei_main, "BRCR")
+mowa_occ <- ss_occ_plot_loop(pei_main, "MOWA")
+heth_occ <- ss_occ_plot_loop(pei_main, "HETH")
+#oven_occ <- ss_occ_plot_loop(pei_main, "OVEN")
+eawp_occ <- ss_occ_plot_loop(pei_main, "EAWP")
+#cawa_occ <- ss_occ_plot_loop(pei_main, "CAWA")
+
+```
+
+```{r}
+#| warning: false
+#| echo: false
+#| eval: false
+#| include: true
+
+ss_occ_plot_loop <- function(input, species_choice) {
+  
+  data <- input
+  
+  wbnp_occu_all <- data |>
+    as_tibble() |>
+    filter(aru_task_status == "Transcribed") |>
+    wt_tidy_species(remove = c("mammal","amphibian","abiotic","insect","unknown")) |>
+    left_join(guilds |> select(species_common_name, habitat_nesting)) |>
+    filter(habitat_nesting %in% c("CW","MW","OW","TSS")) |>
+    wt_replace_tmtt() |>
+    mutate(task_duration = gsub('s','',task_duration) %>% as.numeric()) |>
+    mutate(hour = lubridate::hour(recording_date_time),
+            year = lubridate::year(recording_date_time)) |>
+  # group_by(location) |>
+  # mutate(ct = n_distinct(year)) |>
+  # ungroup() |>
+  # filter(ct == 5) |>
+  filter(hour %in% c(4:7)) |>
+  group_split(year)
+  
+  wbnp_occu_19 <- wbnp_occu_all[[1]]
+  wbnp_occu_20 <- wbnp_occu_all[[2]]
+  wbnp_occu_21 <- wbnp_occu_all[[3]]
+  wbnp_occu_22 <- wbnp_occu_all[[4]]
+  wbnp_occu_23 <- wbnp_occu_all[[5]]
+  
+
+site_covariates_19 <- wbnp_occu_19 |>
+  inner_join(covs) |>
+  select(location, year, coast_dist, landcover, landcover_proportion) |>
+  distinct() |>
+  pivot_wider(names_from = landcover, values_from = landcover_proportion, values_fill = 0) |>
+  group_by(location, year, coast_dist) |>
+  summarise(across(starts_with(c("Anthro","Deciduous","Open","Conifer")), max)) |>
+  ungroup()
+  # pivot_longer(-c(location:coast_dist), names_to = "landcover", values_to = "landcover_proportion") |>
+  # group_by(location, year, coast_dist) |>
+  # filter(landcover_proportion == max(landcover_proportion)) |>
+  # ungroup()
+
+# Print the result
+
+site_covariates_20 <- pei_occu_20 |>
+  inner_join(covs) |>
+  select(location, year, coast_dist, landcover, landcover_proportion) |>
+  distinct() |>
+  pivot_wider(names_from = landcover, values_from = landcover_proportion, values_fill = 0) |>
+  group_by(location, year, coast_dist) |>
+  summarise(across(starts_with(c("Anthro","Deciduous","Open","Conifer")), max)) |>
+  ungroup()
+  # pivot_longer(-c(location:coast_dist), names_to = "landcover", values_to = "landcover_proportion") |>
+  # group_by(location, year, coast_dist) |>
+  # filter(landcover_proportion == max(landcover_proportion)) |>
+  # ungroup()
+
+site_covariates_21 <- pei_occu_21 |>
+  inner_join(covs) |>
+  select(location, year, coast_dist, landcover, landcover_proportion) |>
+  distinct() |>
+  pivot_wider(names_from = landcover, values_from = landcover_proportion, values_fill = 0) |>
+  group_by(location, year, coast_dist) |>
+  summarise(across(starts_with(c("Anthro","Deciduous","Open","Conifer")), max)) |>
+  ungroup()
+  # pivot_longer(-c(location:coast_dist), names_to = "landcover", values_to = "landcover_proportion") |>
+  # group_by(location, year, coast_dist) |>
+  # filter(landcover_proportion == max(landcover_proportion)) |>
+  # ungroup()
+
+site_covariates_22 <- pei_occu_22 |>
+  inner_join(covs) |>
+  select(location, year, coast_dist, landcover, landcover_proportion) |>
+  distinct() |>
+  pivot_wider(names_from = landcover, values_from = landcover_proportion, values_fill = 0) |>
+  group_by(location, year, coast_dist) |>
+summarise(across(starts_with(c("Anthro","Deciduous","Open","Conifer")), max)) |>
+  ungroup()
+  # pivot_longer(-c(location:coast_dist), names_to = "landcover", values_to = "landcover_proportion") |>
+  # group_by(location, year, coast_dist) |>
+  # filter(landcover_proportion == max(landcover_proportion)) |>
+  # ungroup()
+
+site_covariates_23 <- pei_occu_23 |>
+  inner_join(covs) |>
+  select(location, year, coast_dist, landcover, landcover_proportion) |>
+  distinct() |>
+  pivot_wider(names_from = landcover, values_from = landcover_proportion, values_fill = 0) |>
+  group_by(location, year, coast_dist) |>
+  summarise(across(starts_with(c("Anthro","Deciduous","Open","Conifer")), max)) |>
+  ungroup()
+  # pivot_longer(-c(location:coast_dist), names_to = "landcover", values_to = "landcover_proportion") |>
+  # group_by(location, year, coast_dist) |>
+  # filter(landcover_proportion == max(landcover_proportion)) |>
+  # ungroup()
+
+print('Breaking here?')
+
+occu_one_19 <- wt_format_occupancy(pei_occu_19, siteCovs = site_covariates_19, species = species_choice)
+occu_one_20 <- wt_format_occupancy(pei_occu_20, siteCovs = site_covariates_20, species = species_choice)
+occu_one_21 <- wt_format_occupancy(pei_occu_21, siteCovs = site_covariates_21, species = species_choice)
+occu_one_22 <- wt_format_occupancy(pei_occu_22, siteCovs = site_covariates_22, species = species_choice)
+occu_one_23 <- wt_format_occupancy(pei_occu_23, siteCovs = site_covariates_23, species = species_choice)
+
+print('Breaking here2?')
+
+sitecovs_to_scale <- c("coast_dist","Anthro","Open","Conifer","Deciduous")
+
+for (variable in sitecovs_to_scale) {
+  occu_one_19@siteCovs[[variable]] <- scale(occu_one_19@siteCovs[[variable]])
+  occu_one_20@siteCovs[[variable]] <- scale(occu_one_20@siteCovs[[variable]])
+  occu_one_21@siteCovs[[variable]] <- scale(occu_one_21@siteCovs[[variable]])
+  occu_one_22@siteCovs[[variable]] <- scale(occu_one_22@siteCovs[[variable]])
+  occu_one_23@siteCovs[[variable]] <- scale(occu_one_23@siteCovs[[variable]])
+}
+
+obscovs_to_scale <- c("doy","hr","doy2","hr2")
+
+for (variable in obscovs_to_scale) {
+  occu_one_19@obsCovs[[variable]] <- scale(occu_one_19@obsCovs[[variable]])
+  occu_one_20@obsCovs[[variable]] <- scale(occu_one_20@obsCovs[[variable]])
+  occu_one_21@obsCovs[[variable]] <- scale(occu_one_21@obsCovs[[variable]])
+  occu_one_22@obsCovs[[variable]] <- scale(occu_one_22@obsCovs[[variable]])
+  occu_one_23@obsCovs[[variable]] <- scale(occu_one_23@obsCovs[[variable]])
+}
+
+print('Breaking here4?')
+
+occu_model_19 <- occu(~ doy2 + hr2 ~ Anthro + Open + Deciduous + Conifer, occu_one_19)
+occu_model_20 <- occu(~ doy2 + hr2 ~ Anthro + Open + Deciduous + Conifer, occu_one_20)
+occu_model_21 <- occu(~ doy2 + hr2 ~ Anthro + Open + Deciduous + Conifer, occu_one_21)
+occu_model_22 <- occu(~ doy2 + hr2 ~ Anthro + Open + Deciduous + Conifer, occu_one_22)
+occu_model_23 <- occu(~ doy2 + hr2 ~ Anthro + Open + Deciduous + Conifer, occu_one_23)
+
+print('Breaking here5?')
+
+# gof19 <- mb.gof.test(occu_model_19, nsim=1000, plot.hist=F)
+# gof20 <- mb.gof.test(occu_model_20, nsim=1000, plot.hist=F)
+# gof21 <- mb.gof.test(occu_model_21, nsim=1000, plot.hist=F)
+# gof22 <- mb.gof.test(occu_model_22, nsim=1000, plot.hist=F)
+# gof23 <- mb.gof.test(occu_model_23, nsim=1000, plot.hist=F)
+
+print('Breaking her65?')
+
+# print(gof19$c.hat.est)
+# print(gof20$c.hat.est)
+# print(gof21$c.hat.est)
+# print(gof22$c.hat.est)
+# print(gof23$c.hat.est)
+
+print('Breaking heasadsasdr65?')
+
+occ_dredge_19 <- dredge(occu_model_19)
+occ_dredge_delta_19 <- get.models(occ_dredge_19, subset = delta <= 2.5)
+if(length(occ_dredge_delta_19) == 1){occ_avg_19 <- NULL} else {occ_avg_19 <- model.avg(occ_dredge_delta_19, fit = TRUE)}
+if (is.null(occ_avg_19)) {occ_fit_19 <- predict(occu_model_19, site_covariates_19, type="state",interval="confidence")}  else {occ_fit_19 <- predict(occ_avg_19, site_covariates_19, type="state",interval="confidence")}
+if ("fit" %in% colnames(occ_fit_19 %>% as_tibble())) {occ_graph_19 <- occ_fit_19 %>% as_tibble() %>% bind_cols(., site_covariates_19)} else {occ_graph_19 <- occ_fit_19 %>% as_tibble() %>% bind_cols(., site_covariates_19) %>% rename("Fit" = Predicted)}
+
+print('Breaking her65???S??')
+
+occ_dredge_20 <- dredge(occu_model_20)
+occ_dredge_delta_20 <- get.models(occ_dredge_20, subset = delta <= 2.5)
+if(length(occ_dredge_delta_20) == 1){occ_avg_20 <- NULL} else {occ_avg_20 <- model.avg(occ_dredge_delta_20, fit = TRUE)}
+if (is.null(occ_avg_20)) {occ_fit_20 <- predict(occu_model_20, site_covariates_20, type="state",interval="confidence")} else {occ_fit_20 <- predict(occ_avg_20, site_covariates_20, type="state",interval="confidence")}
+if ("fit" %in% colnames(occ_fit_20 %>% as_tibble())) {occ_graph_20 <- occ_fit_20 %>% as_tibble() %>% bind_cols(., site_covariates_20)} else {occ_graph_20 <- occ_fit_20 %>% as_tibble() %>% bind_cols(., site_covariates_20) %>% rename("Fit" = Predicted)}
+
+print('Breaking her65kjdslkhsdj?')
+
+occ_dredge_21 <- dredge(occu_model_21)
+occ_dredge_delta_21 <- get.models(occ_dredge_21, subset = delta <= 2.5)
+if(length(occ_dredge_delta_21) == 1){occ_avg_21 <- NULL} else {occ_avg_21 <- model.avg(occ_dredge_delta_21, fit = TRUE)}
+if (is.null(occ_avg_21)) {occ_fit_21 <- predict(occu_model_21, site_covariates_21, type="state",interval="confidence")} else {occ_fit_21 <- predict(occ_avg_21, site_covariates_21, type="state",interval="confidence")}
+if ("fit" %in% colnames(occ_fit_21 %>% as_tibble())) {occ_graph_21 <- occ_fit_21 %>% as_tibble() %>% bind_cols(., site_covariates_21)} else {occ_graph_21 <- occ_fit_21 %>% as_tibble() %>% bind_cols(., site_covariates_21) %>% rename("Fit" = Predicted)}
+
+print('Breaking her65kjdssdsaflkhsdj?')
+
+occ_dredge_22 <- dredge(occu_model_22)
+occ_dredge_delta_22 <- get.models(occ_dredge_22, subset = delta <= 2.5)
+if(length(occ_dredge_delta_22) == 1){occ_avg_22 <- NULL} else {occ_avg_22 <- model.avg(occ_dredge_delta_22, fit = TRUE)}
+if (is.null(occ_avg_22)) {occ_fit_22 <- predict(occu_model_22, site_covariates_22, type="state",interval="confidence")} else {occ_fit_22 <- predict(occ_avg_22, site_covariates_22, type="state",interval="confidence")}
+if ("fit" %in% colnames(occ_fit_22 %>% as_tibble())) {occ_graph_22 <- occ_fit_22 %>% as_tibble() %>% bind_cols(., site_covariates_22)} else {occ_graph_22 <- occ_fit_22 %>% as_tibble() %>% bind_cols(., site_covariates_22) %>% rename("Fit" = Predicted)}
+
+print('Breaking aaaaa?')
+
+occ_dredge_23 <- dredge(occu_model_23)
+occ_dredge_delta_23 <- get.models(occ_dredge_23, subset = delta <= 2.5)
+if(length(occ_dredge_delta_23) == 1){occ_avg_23 <- NULL} else {occ_avg_23 <- model.avg(occ_dredge_delta_23, fit = TRUE)}
+if (is.null(occ_avg_23)) {occ_fit_23 <- predict(occu_model_23, site_covariates_23, type="state",interval="confidence")} else {occ_fit_23 <- predict(occ_avg_23, site_covariates_23, type="state",interval="confidence")}
+if ("fit" %in% colnames(occ_fit_23 %>% as_tibble())) {occ_graph_23 <- occ_fit_23 %>% as_tibble() %>% bind_cols(., site_covariates_23)} else {occ_graph_23 <- occ_fit_23 %>% as_tibble() %>% bind_cols(., site_covariates_23) %>% rename("Fit" = Predicted)}
+
+print('Breaking her58?')
+
+occ_graph_all <- bind_rows(occ_graph_19, occ_graph_20, occ_graph_21, occ_graph_22, occ_graph_23)
+
+zz <- data |>
+  select(species_code, species_common_name) |>
+  distinct() |>
+  filter(species_code == species_choice) |>
+  select(species_common_name) |>
+  pull()
+  
+occ_plot <- ggplot(occ_graph_all %>%
+         mutate(year = factor(year)) %>%
+  select(fit:year), aes(x = year, y = fit, fill=year)) +
+  geom_boxplot() +
+  ylim(0.00,1.00) +
+  labs(title = paste0(zz),
+       x = "Year") +
+  theme_bw() +
+  theme(legend.position="none") +
+  scale_fill_viridis_d()
+  
+  return(occ_plot)
+  
+}
+
+# Where input in the cleaned data and species_choice is the list of forest obligate species.
+
+
+```
+
+```{r}
+#| warning: false
+#| echo: false
+#| eval: true
+#| include: true
+#| fig-width: 12
+#| fig-height: 12
+#| fig-cap: Predicted single-season occupancy of forest species (Habitat nesting = Conifer) within Prince Edward Island National Park. The data represents the average species occupancy across all surveyed locations for each respective year.
+#| label: fig-spp-occ-conifer
+#| fig-column: page-right
+
+#occ_spp |> select(species_code) |> slice(1:20) |> pull()
+
+ggarrange(btnw_occ, blbw_occ, gcki_occ, yrwa_occ, mawa_occ, btbw_occ, bhvi_occ)
+
+```
 
 # Discussion
