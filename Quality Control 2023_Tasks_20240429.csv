@@ -1,0 +1,407 @@
+﻿location,recordingDate,method,taskLength,status,transcriber,rain,wind,industryNoise,otherNoise,audioQuality,taskComments,internal_task_id
+W889-CCL, 2018-05-28 05:46:00,1SPT,180,Transcribed,Steve Enid,None,None,None,None,None,good recording !,798622
+945-NW, 2019-06-02 07:11:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,None,None,,798861
+1329-SW, 2019-04-01 07:43:00,1SPT,180,Transcribed,Meredith Stoesz,None,Heavy,None,Heavy,None,,798600
+BG-5-75, 2020-05-25 05:49:00,1SPT,180,New,Michelle Knaggs,,,,,,,963740
+241-NE, 2016-06-24 07:05:00,1SPT,180,New,Michelle Knaggs,,,,,,,963741
+1128-SW, 2019-06-18 05:34:00,1SPT,180,New,Michelle Knaggs,,,,,,,963742
+823-NE, 2015-06-27 07:16:00,1SPT,180,New,Michelle Knaggs,,,,,,,963743
+753-NW, 2017-06-12 05:35:00,1SPT,180,New,Michelle Knaggs,,,,,,,963744
+13-SW, 2015-05-20 05:57:00,1SPT,180,New,Michelle Knaggs,,,,,,,963745
+956-NW, 2016-06-08 05:36:00,1SPT,180,New,Michelle Knaggs,,,,,,,963746
+637-SW, 2018-04-13 07:13:00,1SPT,180,New,Michelle Knaggs,,,,,,,963747
+212-SE, 2017-06-01 07:11:00,1SPT,180,New,Michelle Knaggs,,,,,,,963748
+1080-NW, 2020-05-19 05:57:00,1SPT,180,New,Michelle Knaggs,,,,,,,963749
+W889-CCL, 2018-05-28 05:46:00,1SPT,180,New,Michelle Knaggs,,,,,,,963750
+OG-EI-817-41-1, 2017-05-21 05:55:00,1SPT,180,New,Michelle Knaggs,,,,,,,963751
+1480-SE, 2017-05-29 05:44:00,1SPT,180,New,Michelle Knaggs,,,,,,,963752
+854-NE, 2019-07-04 07:11:00,1SPT,180,New,Michelle Knaggs,,,,,,,963753
+414-NW, 2015-06-20 07:14:00,1SPT,180,New,Michelle Knaggs,,,,,,,963759
+670-NE, 2018-05-31 00:00:00,1SPT,180,Transcribed,Michelle Knaggs,None,None,None,None,None,,963757
+854-SE, 2019-05-10 06:14:00,1SPT,180,Transcribed,Michelle Knaggs,,,,,,,963758
+621-SW, 2017-06-06 07:07:00,1SPT,180,New,Michelle Knaggs,,,,,,,963760
+483-SW, 2017-05-17 00:00:00,1SPT,180,New,Michelle Knaggs,,,,,,,963761
+1265-SW, 2020-07-09 00:00:00,1SPT,180,New,Michelle Knaggs,,,,,,,963762
+1329-SW, 2019-04-01 07:43:00,1SPT,180,New,Michelle Knaggs,,,,,,,963763
+474-NE, 2015-04-04 07:35:00,1SPT,180,New,Michelle Knaggs,,,,,,,963764
+892-SE, 2016-07-03 00:00:00,1SPT,180,New,Michelle Knaggs,,,,,,,963765
+1285-SE, 2016-06-06 07:07:00,1SPT,180,New,Michelle Knaggs,,,,,,,963769
+182-SW, 2017-06-20 00:00:00,1SPT,180,Transcribed,Michelle Knaggs,None,None,None,None,None,,963766
+945-NW, 2019-06-02 07:11:00,1SPT,180,In Progress,Michelle Knaggs,None,None,None,None,None,,963768
+13-SW, 2015-05-20 05:57:00,1SPT,180,Transcribed,Eric Pollard,None,None,None,None,None,,961520
+833-NW, 2018-06-05 07:08:00,1SPT,180,Transcribed,Kelsey Bell,Light,None,Light,None,None,,798781
+13-SW, 2015-05-20 05:57:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798779
+753-NW, 2017-06-12 05:35:00,1SPT,180,Transcribed,Marcus Sommers,None,Light,None,None,None,,798758
+945-NW, 2019-06-02 07:11:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,None,Light,None,,798591
+BG-5-75, 2020-05-25 05:49:00,1SPT,180,Transcribed,Christopher Moser-Purdy,,,,,,,798644
+854-SE, 2019-05-10 06:14:00,1SPT,180,Transcribed,Marcus Sommers,None,None,Moderate,None,None,,798759
+BG-5-75, 2020-05-25 05:49:00,1SPT,180,Transcribed,Kelsey Bell,None,None,Light,None,None,,798764
+W889-CCL, 2018-05-28 05:46:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798772
+1329-SW, 2019-04-01 07:43:00,1SPT,180,Transcribed,Kelsey Bell,None,Moderate,Light,None,None,,798780
+BG-5-75, 2020-05-25 05:49:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,Moderate,Moderate,None,,798824
+1128-SW, 2019-06-18 05:34:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,Light,None,None,,798846
+483-SW, 2017-05-17 00:00:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,Light,None,,798858
+241-NE, 2016-06-24 07:05:00,1SPT,180,Transcribed,Lucas Wessner,None,Moderate,None,None,None,,798859
+511-SW, 2019-06-23 00:00:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,None,None,,798875
+1128-SW, 2019-06-18 05:34:00,1SPT,180,Transcribed,Lucas Wessner,,,,,,,798876
+637-SW, 2018-04-13 07:13:00,1SPT,180,Transcribed,Meredith Stoesz,,,,,,,798587
+854-NE, 2019-07-04 07:11:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,Light,None,None,,798670
+854-SE, 2019-05-10 06:14:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,Light,None,None,None,,798669
+1265-SW, 2020-07-09 00:00:00,1SPT,180,Transcribed,Steve Enid,None,Light,None,Moderate,None,"running water, wind noise
+maybe a waterfall in background",798615
+511-SW, 2019-06-23 00:00:00,1SPT,180,Transcribed,Steve Enid,None,Light,None,None,None,,798635
+670-NE, 2018-05-31 00:00:00,1SPT,180,Transcribed,Alana Demko,Light,None,Light,Light,None,rustling noise,798702
+621-SW, 2017-06-06 07:07:00,1SPT,180,Transcribed,Steve Enid,None,None,None,None,None,,798623
+854-SE, 2019-05-10 06:14:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,Light,Light,None,,798609
+63-NE, 2016-06-02 05:40:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,None,None,,798853
+511-SW, 2019-06-23 00:00:00,1SPT,180,Transcribed,Marcus Sommers,None,None,None,None,None,,798755
+241-NE, 2016-06-24 07:05:00,1SPT,180,Transcribed,Marcus Sommers,None,Light,Light,None,None,,798739
+OG-EI-817-41-1, 2017-05-21 05:55:00,1SPT,180,Transcribed,Marcus Sommers,None,None,Moderate,None,None,,798746
+753-NW, 2017-06-12 05:35:00,1SPT,180,Transcribed,Bronwyn Robinson,None,Moderate,None,None,None,,798848
+892-SE, 2016-07-03 00:00:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,Light,None,"music between 110 and 120sec
+otherwise, no signals detected",798782
+730-NW, 2016-06-22 07:04:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798787
+854-NE, 2019-07-04 07:11:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,Light,None,None,,798880
+854-SE, 2019-05-10 06:14:00,1SPT,180,Transcribed,Kelsey Bell,None,Light,None,None,None,,798789
+892-SE, 2016-07-03 00:00:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,Light,None,,798872
+956-NW, 2016-06-08 05:36:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798783
+1128-SW, 2019-06-18 05:34:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798786
+474-NE, 2015-04-04 07:35:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,None,None,,798874
+670-NE, 2018-05-31 00:00:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,None,None,,798672
+63-NE, 2016-06-02 05:40:00,1SPT,180,Transcribed,Jon Van Arragon,None,None,None,None,None,,798673
+1329-SW, 2019-04-01 07:43:00,1SPT,180,Transcribed,Gill Holmes,Heavy,Heavy,Light,Moderate,None,,798810
+414-NW, 2015-06-20 07:14:00,1SPT,180,Transcribed,Jon Van Arragon,None,None,None,None,None,,798680
+BG-5-75, 2020-05-25 05:49:00,1SPT,180,Transcribed,Gill Holmes,None,Moderate,Light,None,Both Sides Extra Static,,798794
+854-SE, 2019-05-10 06:14:00,1SPT,180,Transcribed,Gill Holmes,None,Moderate,None,Moderate,None,,798819
+1265-SW, 2020-07-09 00:00:00,1SPT,180,Transcribed,Gill Holmes,Light,Moderate,None,Light,None,,798795
+63-NE, 2016-06-02 05:40:00,1SPT,180,Transcribed,Gill Holmes,Light,Light,None,None,None,,798793
+1080-NW, 2020-05-19 05:57:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,Moderate,None,,798684
+892-SE, 2016-07-03 00:00:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,None,None,,798692
+1480-SE, 2017-05-29 05:44:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,Moderate,None,,798687
+182-SW, 2017-06-20 00:00:00,1SPT,180,Transcribed,Lucas Wessner,None,Moderate,None,Light,None,,798865
+670-NE, 2018-05-31 00:00:00,1SPT,180,Transcribed,Gill Holmes,None,Light,None,None,None,,798792
+212-SE, 2017-06-01 07:11:00,1SPT,180,Transcribed,Lucas Wessner,None,Moderate,None,Light,None,,798856
+13-SW, 2015-05-20 05:57:00,1SPT,180,Transcribed,Gill Holmes,None,Light,None,Light,Both Sides Extra Static,,798809
+637-SW, 2018-04-13 07:13:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,Light,None,,798857
+753-NW, 2017-06-12 05:35:00,1SPT,180,Transcribed,Gill Holmes,None,Light,None,None,Both Sides Extra Static,,798818
+730-NW, 2016-06-22 07:04:00,1SPT,180,Transcribed,Gill Holmes,Light,Light,None,Light,None,,798817
+511-SW, 2019-06-23 00:00:00,1SPT,180,Transcribed,Gill Holmes,None,Light,None,Light,Both Sides Extra Static,,798815
+1080-NW, 2020-05-19 05:57:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,Moderate,None,,798864
+1329-SW, 2019-04-01 07:43:00,1SPT,180,Transcribed,Lucas Wessner,Moderate,Moderate,None,Light,None,,798870
+13-SW, 2015-05-20 05:57:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,None,None,None,,798839
+956-NW, 2016-06-08 05:36:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,None,Light,None,,798843
+637-SW, 2018-04-13 07:13:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,None,None,None,,798827
+212-SE, 2017-06-01 07:11:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,None,None,None,,798826
+1080-NW, 2020-05-19 05:57:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,None,Light,None,,798834
+W889-CCL, 2018-05-28 05:46:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,Light,None,None,,798832
+1080-NW, 2020-05-19 05:57:00,1SPT,180,Transcribed,Kelsey Bell,None,None,Light,None,None,,798774
+511-SW, 2019-06-23 00:00:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798785
+892-SE, 2016-07-03 00:00:00,1SPT,180,Transcribed,Alana Demko,Light,Light,None,Light,None,occasional booming sound (industrial?),798722
+854-NE, 2019-07-04 07:11:00,1SPT,180,Transcribed,Marcus Sommers,None,Light,Light,None,None,,798760
+823-NE, 2015-06-27 07:16:00,1SPT,180,Transcribed,Marcus Sommers,None,Light,Light,None,None,,798761
+670-NE, 2018-05-31 00:00:00,1SPT,180,Transcribed,Marcus Sommers,None,None,None,None,None,,798732
+63-NE, 2016-06-02 05:40:00,1SPT,180,Transcribed,Marcus Sommers,Light,None,None,None,None,,798733
+637-SW, 2018-04-13 07:13:00,1SPT,180,Transcribed,Marcus Sommers,None,None,None,None,None,,798737
+823-NE, 2015-06-27 07:16:00,1SPT,180,Transcribed,Alana Demko,None,None,None,Moderate,None,traffic,798731
+637-SW, 2018-04-13 07:13:00,1SPT,180,Transcribed,Alana Demko,Light,None,None,None,None,,798707
+63-NE, 2016-06-02 05:40:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798763
+833-NW, 2018-06-05 07:08:00,1SPT,180,Transcribed,Lucas Wessner,Moderate,Light,Light,None,None,,798871
+483-SW, 2017-05-17 00:00:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798768
+414-NW, 2015-06-20 07:14:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798770
+670-NE, 2018-05-31 00:00:00,1SPT,180,Transcribed,Meredith Stoesz,None,None,Light,Light,None,,798582
+63-NE, 2016-06-02 05:40:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,None,None,None,,798583
+945-NW, 2019-06-02 07:11:00,1SPT,180,Transcribed,Alana Demko,Light,Light,None,None,None,,798711
+1329-SW, 2019-04-01 07:43:00,1SPT,180,Bad Weather,Alana Demko,Moderate,Heavy,None,None,None,not many songs audible,798720
+833-NW, 2018-06-05 07:08:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,Moderate,None,None,,798661
+670-NE, 2018-05-31 00:00:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798642
+13-SW, 2015-05-20 05:57:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798659
+892-SE, 2016-07-03 00:00:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798662
+63-NE, 2016-06-02 05:40:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798643
+212-SE, 2017-06-01 07:11:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798646
+182-SW, 2017-06-20 00:00:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798655
+241-NE, 2016-06-24 07:05:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798649
+414-NW, 2015-06-20 07:14:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798650
+474-NE, 2015-04-04 07:35:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798664
+621-SW, 2017-06-06 07:07:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798653
+483-SW, 2017-05-17 00:00:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798648
+730-NW, 2016-06-22 07:04:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798667
+753-NW, 2017-06-12 05:35:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,Moderate,None,None,None,,798668
+823-NE, 2015-06-27 07:16:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,Moderate,None,,798671
+1285-SE, 2016-06-06 07:07:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,Moderate,None,None,None,,798658
+637-SW, 2018-04-13 07:13:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798647
+414-NW, 2015-06-20 07:14:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,Light,None,,798860
+730-NW, 2016-06-22 07:04:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,Light,None,,798877
+753-NW, 2017-06-12 05:35:00,1SPT,180,Transcribed,Lucas Wessner,None,Moderate,None,Light,None,,798878
+W889-CCL, 2018-05-28 05:46:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798652
+OG-EI-817-41-1, 2017-05-21 05:55:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,Heavy,None,None,,798656
+956-NW, 2016-06-08 05:36:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798663
+1128-SW, 2019-06-18 05:34:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798666
+1329-SW, 2019-04-01 07:43:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,Moderate,None,Moderate,None,,798660
+511-SW, 2019-06-23 00:00:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798665
+212-SE, 2017-06-01 07:11:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,None,None,Both Sides Extra Static,,798586
+1080-NW, 2020-05-19 05:57:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,Moderate,None,road,961554
+1480-SE, 2017-05-29 05:44:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,Moderate,None,road,961557
+956-NW, 2016-06-08 05:36:00,1SPT,180,Transcribed,Alana Demko,None,Light,Light,Moderate,None,insects buzzing,798723
+854-NE, 2019-07-04 07:11:00,1SPT,180,Transcribed,Alana Demko,Light,Light,Light,None,None,,798730
+1080-NW, 2020-05-19 05:57:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,Light,None,,798654
+892-SE, 2016-07-03 00:00:00,1SPT,180,Transcribed,Steve Enid,None,None,Light,Light,None,explosions,798632
+OG-EI-817-41-1, 2017-05-21 05:55:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,Light,None,None,,798836
+1480-SE, 2017-05-29 05:44:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,None,Moderate,None,,798837
+854-NE, 2019-07-04 07:11:00,1SPT,180,Transcribed,Bronwyn Robinson,None,Light,None,Light,None,,798850
+BG-5-75, 2020-05-25 05:49:00,1SPT,180,Transcribed,Steve Enid,None,Light,Moderate,Moderate,None,,798614
+212-SE, 2017-06-01 07:11:00,1SPT,180,Transcribed,Steve Enid,None,None,None,None,None,good recording !,798616
+241-NE, 2016-06-24 07:05:00,1SPT,180,Transcribed,Steve Enid,None,None,None,None,None,very good recording !,798619
+511-SW, 2019-06-23 00:00:00,1SPT,180,Transcribed,Jon Van Arragon,None,None,None,None,None,,798695
+212-SE, 2017-06-01 07:11:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,None,None,,798676
+854-NE, 2019-07-04 07:11:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,None,None,,798700
+1265-SW, 2020-07-09 00:00:00,1SPT,180,Transcribed,Alana Demko,Light,Moderate,None,None,None,,798705
+1480-SE, 2017-05-29 05:44:00,1SPT,180,Transcribed,Steve Enid,None,Light,Light,Moderate,None,loud traffic,798627
+945-NW, 2019-06-02 07:11:00,1SPT,180,Transcribed,Steve Enid,None,Light,None,None,None,good recording !,798621
+OG-EI-817-41-1, 2017-05-21 05:55:00,1SPT,180,Transcribed,Alana Demko,None,None,Moderate,None,None,,798716
+1080-NW, 2020-05-19 05:57:00,1SPT,180,Transcribed,Alana Demko,None,Light,None,Light,None,traffic,798714
+637-SW, 2018-04-13 07:13:00,1SPT,180,Transcribed,Steve Enid,None,None,None,None,None,,798617
+483-SW, 2017-05-17 00:00:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,None,None,Both Sides Extra Static,,798588
+13-SW, 2015-05-20 05:57:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,None,None,None,,798599
+OG-EI-817-41-1, 2017-05-21 05:55:00,1SPT,180,Transcribed,Steve Enid,None,None,None,None,None,,798626
+63-NE, 2016-06-02 05:40:00,1SPT,180,Transcribed,Steve Enid,None,None,None,None,None,,798613
+13-SW, 2015-05-20 05:57:00,1SPT,180,Transcribed,Steve Enid,None,None,None,None,None,,798629
+753-NW, 2017-06-12 05:35:00,1SPT,180,Transcribed,Meredith Stoesz,None,Moderate,None,None,None,,798608
+414-NW, 2015-06-20 07:14:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,None,None,Both Sides Extra Static,,798590
+474-NE, 2015-04-04 07:35:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,Light,None,Both Sides Extra Static,no birds detected.,798604
+892-SE, 2016-07-03 00:00:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,Light,Moderate,Both Sides Extra Static,,798602
+182-SW, 2017-06-20 00:00:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,None,None,Both Sides Extra Static,,798595
+621-SW, 2017-06-06 07:07:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,Light,None,None,,798593
+511-SW, 2019-06-23 00:00:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,None,None,Both Sides Extra Static,,798605
+1480-SE, 2017-05-29 05:44:00,1SPT,180,Transcribed,Meredith Stoesz,,,,,,,798597
+511-SW, 2019-06-23 00:00:00,1SPT,180,Transcribed,Alana Demko,None,Light,None,None,None,,798725
+1285-SE, 2016-06-06 07:07:00,1SPT,180,Transcribed,Meredith Stoesz,,,,,,,798598
+833-NW, 2018-06-05 07:08:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,Light,None,None,,798691
+474-NE, 2015-04-04 07:35:00,1SPT,180,Transcribed,Alana Demko,None,Light,None,Light,None,shuffling noise,798724
+483-SW, 2017-05-17 00:00:00,1SPT,180,Transcribed,Alana Demko,None,None,None,None,None,,798708
+182-SW, 2017-06-20 00:00:00,1SPT,180,Transcribed,Alana Demko,None,Light,None,None,None,,798715
+621-SW, 2017-06-06 07:07:00,1SPT,180,Transcribed,Alana Demko,Light,Light,None,Light,None,"shuffling noises, insects buzzing",798713
+BG-5-75, 2020-05-25 05:49:00,1SPT,180,Transcribed,Marcus Sommers,None,None,Light,None,None,,798734
+833-NW, 2018-06-05 07:08:00,1SPT,180,Transcribed,Meredith Stoesz,Light,Light,None,Heavy,Both Sides Extra Static,,798601
+730-NW, 2016-06-22 07:04:00,1SPT,180,Transcribed,Steve Enid,None,Light,None,Light,None,,798637
+483-SW, 2017-05-17 00:00:00,1SPT,180,Transcribed,Steve Enid,None,None,None,None,None,cool frogs,798618
+1285-SE, 2016-06-06 07:07:00,1SPT,180,Transcribed,Alana Demko,None,Moderate,None,None,None,borderline heavy wind,798718
+1128-SW, 2019-06-18 05:34:00,1SPT,180,Transcribed,Meredith Stoesz,None,None,None,Light,None,,798606
+730-NW, 2016-06-22 07:04:00,1SPT,180,Transcribed,Meredith Stoesz,,,,,,,798607
+823-NE, 2015-06-27 07:16:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,Light,Light,None,,798611
+BG-5-75, 2020-05-25 05:49:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,Moderate,None,None,,798584
+956-NW, 2016-06-08 05:36:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,Light,Light,None,,798603
+854-NE, 2019-07-04 07:11:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,Light,Light,None,,798610
+212-SE, 2017-06-01 07:11:00,1SPT,180,Transcribed,Alana Demko,Light,Light,None,Light,None,insects buzzing,798706
+1480-SE, 2017-05-29 05:44:00,1SPT,180,Transcribed,Alana Demko,None,None,None,Moderate,None,traffic,798717
+W889-CCL, 2018-05-28 05:46:00,1SPT,180,Transcribed,Alana Demko,None,Light,None,None,None,,798712
+1128-SW, 2019-06-18 05:34:00,1SPT,180,Transcribed,Alana Demko,None,Light,Light,None,None,,798726
+1128-SW, 2019-06-18 05:34:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,None,None,,798696
+753-NW, 2017-06-12 05:35:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,None,None,,798698
+1265-SW, 2020-07-09 00:00:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,None,None,,798675
+241-NE, 2016-06-24 07:05:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,None,None,,798679
+W889-CCL, 2018-05-28 05:46:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,None,None,,798682
+212-SE, 2017-06-01 07:11:00,1SPT,180,Transcribed,Marcus Sommers,None,Light,None,Light,None,,798736
+730-NW, 2016-06-22 07:04:00,1SPT,180,Transcribed,Alana Demko,Light,Light,None,Light,None,insects buzzing,798727
+892-SE, 2016-07-03 00:00:00,1SPT,180,Transcribed,Marcus Sommers,None,None,None,None,None,,798752
+956-NW, 2016-06-08 05:36:00,1SPT,180,Transcribed,Marcus Sommers,None,None,Light,Light,None,,798753
+474-NE, 2015-04-04 07:35:00,1SPT,180,Transcribed,Marcus Sommers,None,None,None,None,None,,798754
+1128-SW, 2019-06-18 05:34:00,1SPT,180,Transcribed,Marcus Sommers,None,None,Light,None,None,,798756
+1265-SW, 2020-07-09 00:00:00,1SPT,180,Transcribed,Marcus Sommers,None,Light,None,Light,None,,798735
+483-SW, 2017-05-17 00:00:00,1SPT,180,Transcribed,Marcus Sommers,None,None,None,None,None,,798738
+414-NW, 2015-06-20 07:14:00,1SPT,180,Transcribed,Marcus Sommers,None,None,None,None,None,,798740
+945-NW, 2019-06-02 07:11:00,1SPT,180,Transcribed,Marcus Sommers,None,Light,None,None,None,,798741
+1285-SE, 2016-06-06 07:07:00,1SPT,180,Transcribed,Lucas Wessner,None,Heavy,None,None,None,,798868
+BG-5-75, 2020-05-25 05:49:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,Moderate,None,,798854
+W889-CCL, 2018-05-28 05:46:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,Light,None,,798862
+854-NE, 2019-07-04 07:11:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798790
+621-SW, 2017-06-06 07:07:00,1SPT,180,Transcribed,Marcus Sommers,None,None,None,None,None,,798743
+1080-NW, 2020-05-19 05:57:00,1SPT,180,Transcribed,Marcus Sommers,None,Light,Light,None,None,,798744
+182-SW, 2017-06-20 00:00:00,1SPT,180,Transcribed,Marcus Sommers,None,None,None,None,None,,798745
+1285-SE, 2016-06-06 07:07:00,1SPT,180,Bad Weather,Marcus Sommers,,,,,,,798748
+13-SW, 2015-05-20 05:57:00,1SPT,180,Transcribed,Marcus Sommers,None,None,None,None,None,,798749
+1329-SW, 2019-04-01 07:43:00,1SPT,180,Bad Weather,Marcus Sommers,None,Moderate,Moderate,None,None,,798750
+1265-SW, 2020-07-09 00:00:00,1SPT,180,Transcribed,Lucas Wessner,Light,Moderate,None,None,None,,798855
+854-SE, 2019-05-10 06:14:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,Light,None,,798879
+823-NE, 2015-06-27 07:16:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,Light,None,None,,798881
+833-NW, 2018-06-05 07:08:00,1SPT,180,Transcribed,Marcus Sommers,None,None,Light,None,None,,798751
+833-NW, 2018-06-05 07:08:00,1SPT,180,Transcribed,Bronwyn Robinson,Light,None,Light,None,None,,798841
+511-SW, 2019-06-23 00:00:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,None,None,None,,798845
+63-NE, 2016-06-02 05:40:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,None,None,None,,798823
+670-NE, 2018-05-31 00:00:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,Light,None,None,,798822
+854-SE, 2019-05-10 06:14:00,1SPT,180,Transcribed,Bronwyn Robinson,None,Light,None,Light,None,,798849
+414-NW, 2015-06-20 07:14:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,None,None,None,,798830
+621-SW, 2017-06-06 07:07:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,None,None,None,,798833
+OG-EI-817-41-1, 2017-05-21 05:55:00,1SPT,180,Transcribed,Jon Van Arragon,None,None,None,Moderate,None,,798686
+637-SW, 2018-04-13 07:13:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798767
+1480-SE, 2017-05-29 05:44:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,Moderate,None,,798657
+945-NW, 2019-06-02 07:11:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798651
+956-NW, 2016-06-08 05:36:00,1SPT,180,Transcribed,Steve Enid,None,None,Light,Light,None,"loud flies, some traffic noise",798633
+13-SW, 2015-05-20 05:57:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,None,None,,798869
+621-SW, 2017-06-06 07:07:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798773
+182-SW, 2017-06-20 00:00:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798775
+OG-EI-817-41-1, 2017-05-21 05:55:00,1SPT,180,Transcribed,Kelsey Bell,None,None,Light,None,None,,798776
+1285-SE, 2016-06-06 07:07:00,1SPT,180,Transcribed,Kelsey Bell,None,Moderate,None,None,None,,798778
+823-NE, 2015-06-27 07:16:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798791
+474-NE, 2015-04-04 07:35:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798784
+483-SW, 2017-05-17 00:00:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,None,None,None,,798828
+1265-SW, 2020-07-09 00:00:00,1SPT,180,Transcribed,Bronwyn Robinson,None,Moderate,None,None,None,,798825
+1329-SW, 2019-04-01 07:43:00,1SPT,180,Transcribed,Bronwyn Robinson,None,Heavy,None,Light,None,,798840
+474-NE, 2015-04-04 07:35:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,None,None,None,,798844
+182-SW, 2017-06-20 00:00:00,1SPT,180,Transcribed,Steve Enid,None,None,None,None,None,,798625
+753-NW, 2017-06-12 05:35:00,1SPT,180,Transcribed,Steve Enid,None,Heavy,None,None,None,windy !,798638
+1285-SE, 2016-06-06 07:07:00,1SPT,180,Transcribed,Steve Enid,None,Heavy,None,None,Unbalanced Channels,"left side weaker
+very windy !
+not a good recording !
+i'd call this bad weather !",798628
+833-NW, 2018-06-05 07:08:00,1SPT,180,Transcribed,Steve Enid,Light,Moderate,Moderate,Moderate,None,windy,798631
+823-NE, 2015-06-27 07:16:00,1SPT,180,Transcribed,Steve Enid,None,Light,None,Light,None,traffic noise,798641
+670-NE, 2018-05-31 00:00:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798762
+1265-SW, 2020-07-09 00:00:00,1SPT,180,Transcribed,Kelsey Bell,None,Light,None,None,None,,798765
+212-SE, 2017-06-01 07:11:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798766
+854-SE, 2019-05-10 06:14:00,1SPT,180,Transcribed,Steve Enid,None,Light,None,None,None,good recording,798639
+892-SE, 2016-07-03 00:00:00,1SPT,180,Transcribed,Bronwyn Robinson,None,Light,None,None,None,,798842
+182-SW, 2017-06-20 00:00:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,None,None,None,,798835
+945-NW, 2019-06-02 07:11:00,1SPT,180,Transcribed,Bronwyn Robinson,None,Light,None,None,None,,798831
+1285-SE, 2016-06-06 07:07:00,1SPT,180,Transcribed,Bronwyn Robinson,None,Heavy,None,None,None,,798838
+823-NE, 2015-06-27 07:16:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,None,None,,798701
+1480-SE, 2017-05-29 05:44:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798777
+945-NW, 2019-06-02 07:11:00,1SPT,180,Transcribed,Kelsey Bell,None,None,None,None,None,,798771
+241-NE, 2016-06-24 07:05:00,1SPT,180,Transcribed,Alana Demko,None,Light,None,None,None,,798709
+956-NW, 2016-06-08 05:36:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,None,None,,798693
+13-SW, 2015-05-20 05:57:00,1SPT,180,Transcribed,Alana Demko,None,Light,None,None,None,,798719
+833-NW, 2018-06-05 07:08:00,1SPT,180,Transcribed,Alana Demko,Moderate,Light,Moderate,None,None,,798721
+414-NW, 2015-06-20 07:14:00,1SPT,180,Transcribed,Alana Demko,None,Light,None,Light,None,rustling noise,798710
+63-NE, 2016-06-02 05:40:00,1SPT,180,Transcribed,Alana Demko,Light,Light,None,Light,None,insects buzzing,798703
+753-NW, 2017-06-12 05:35:00,1SPT,180,Transcribed,Alana Demko,None,Moderate,None,None,None,,798728
+241-NE, 2016-06-24 07:05:00,1SPT,180,Transcribed,Bronwyn Robinson,None,Light,None,None,None,,798829
+823-NE, 2015-06-27 07:16:00,1SPT,180,Transcribed,Bronwyn Robinson,None,None,None,Light,None,,798851
+730-NW, 2016-06-22 07:04:00,1SPT,180,Transcribed,Bronwyn Robinson,None,Light,None,None,None,,798847
+1265-SW, 2020-07-09 00:00:00,1SPT,180,Transcribed,Christopher Moser-Purdy,None,None,None,None,None,,798645
+BG-5-75, 2020-05-25 05:49:00,1SPT,180,Transcribed,Alana Demko,Light,Light,None,Moderate,None,"traffic, creaking noises",798704
+637-SW, 2018-04-13 07:13:00,1SPT,180,Transcribed,Jon Van Arragon,None,None,None,None,None,,798677
+854-SE, 2019-05-10 06:14:00,1SPT,180,Transcribed,Alana Demko,None,Moderate,Light,Light,None,shuffling noises,798729
+621-SW, 2017-06-06 07:07:00,1SPT,180,Transcribed,Jon Van Arragon,,,,,,,798683
+1285-SE, 2016-06-06 07:07:00,1SPT,180,Transcribed,Jon Van Arragon,None,Moderate,None,None,None,,798688
+182-SW, 2017-06-20 00:00:00,1SPT,180,Transcribed,Jon Van Arragon,None,None,None,None,None,,798685
+753-NW, 2017-06-12 05:35:00,1SPT,180,Transcribed,Kelsey Bell,None,Light,None,None,None,,798788
+241-NE, 2016-06-24 07:05:00,1SPT,180,Transcribed,Kelsey Bell,None,Light,None,None,None,,798769
+621-SW, 2017-06-06 07:07:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,Light,None,,798863
+670-NE, 2018-05-31 00:00:00,1SPT,180,Transcribed,Lucas Wessner,Light,Light,None,Light,None,,798852
+OG-EI-817-41-1, 2017-05-21 05:55:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,Moderate,Light,None,,798866
+956-NW, 2016-06-08 05:36:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,Moderate,None,,798873
+1480-SE, 2017-05-29 05:44:00,1SPT,180,Transcribed,Lucas Wessner,None,Light,None,Moderate,None,,798867
+730-NW, 2016-06-22 07:04:00,1SPT,180,Transcribed,Marcus Sommers,None,Light,Light,None,None,,798757
+W889-CCL, 2018-05-28 05:46:00,1SPT,180,Transcribed,Marcus Sommers,None,Light,None,None,None,,798742
+1480-SE, 2017-05-29 05:44:00,1SPT,180,Transcribed,Marcus Sommers,None,Light,Light,None,None,,798747
+OG-EI-817-41-1, 2017-05-21 05:55:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,Heavy,None,None,,798596
+W889-CCL, 2018-05-28 05:46:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,Light,None,None,,798592
+241-NE, 2016-06-24 07:05:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,None,None,None,,798589
+1265-SW, 2020-07-09 00:00:00,1SPT,180,Transcribed,Meredith Stoesz,None,Moderate,None,None,None,,798585
+1080-NW, 2020-05-19 05:57:00,1SPT,180,Transcribed,Meredith Stoesz,None,Light,None,Heavy,None,,798594
+474-NE, 2015-04-04 07:35:00,1SPT,180,Transcribed,Eric Pollard,None,None,None,None,None,,961539
+OG-EI-817-41-1, 2017-05-21 05:55:00,1SPT,180,Transcribed,Eric Pollard,None,None,Moderate,None,None,,961526
+1480-SE, 2017-05-29 05:44:00,1SPT,180,Transcribed,Eric Pollard,None,None,Light,None,None,,961527
+212-SE, 2017-06-01 07:11:00,1SPT,180,Transcribed,Eric Pollard,None,None,None,Light,None,,961523
+670-NE, 2018-05-31 00:00:00,1SPT,180,Transcribed,Eric Pollard,None,None,Light,None,None,,961532
+414-NW, 2015-06-20 07:14:00,1SPT,180,Transcribed,Eric Pollard,None,None,None,None,None,,961534
+483-SW, 2017-05-17 00:00:00,1SPT,180,Transcribed,Eric Pollard,None,None,None,None,None,,961536
+956-NW, 2016-06-08 05:36:00,1SPT,180,Transcribed,Eric Pollard,None,None,Light,Moderate,None,Pretty loud fly/bee and cows in background,961521
+474-NE, 2015-04-04 07:35:00,1SPT,180,Transcribed,Steve Enid,None,Light,Light,Light,None,,798634
+414-NW, 2015-06-20 07:14:00,1SPT,180,Transcribed,Steve Enid,None,None,None,None,None,,798620
+670-NE, 2018-05-31 00:00:00,1SPT,180,Transcribed,Steve Enid,None,None,Light,Light,None,industrial noise in background,798612
+1128-SW, 2019-06-18 05:34:00,1SPT,180,Transcribed,Steve Enid,None,None,None,None,None,"good recording !
+very busy !",798636
+854-NE, 2019-07-04 07:11:00,1SPT,180,Transcribed,Steve Enid,None,None,None,None,None,,798640
+1080-NW, 2020-05-19 05:57:00,1SPT,180,Transcribed,Steve Enid,None,None,None,None,None,,798624
+1329-SW, 2019-04-01 07:43:00,1SPT,180,Transcribed,Steve Enid,None,Heavy,Moderate,Moderate,None,traffic noise and wind,798630
+637-SW, 2018-04-13 07:13:00,1SPT,180,Transcribed,Eric Pollard,None,None,None,None,None,,961522
+241-NE, 2016-06-24 07:05:00,1SPT,180,Transcribed,Eric Pollard,None,None,None,None,None,,961516
+1080-NW, 2020-05-19 05:57:00,1SPT,180,Transcribed,Eric Pollard,None,None,Moderate,Moderate,None,Highway and dog barking,961524
+BG-5-75, 2020-05-25 05:49:00,1SPT,180,Transcribed,Eric Pollard,None,Light,Light,None,None,,961515
+1128-SW, 2019-06-18 05:34:00,1SPT,180,Transcribed,Eric Pollard,None,None,None,None,None,,961517
+753-NW, 2017-06-12 05:35:00,1SPT,180,Transcribed,Eric Pollard,None,Moderate,None,None,Unbalanced Channels,,961519
+854-NE, 2019-07-04 07:11:00,1SPT,180,Transcribed,Liam Brennan,None,Light,None,None,None,,961558
+833-NW, 2018-06-05 07:08:00,1SPT,180,Transcribed,Liam Brennan,Light,None,None,Light,None,train,961559
+511-SW, 2019-06-23 00:00:00,1SPT,180,Transcribed,Eric Pollard,None,None,None,None,None,,961530
+854-SE, 2019-05-10 06:14:00,1SPT,180,Transcribed,Eric Pollard,None,Light,Light,Light,None,,961533
+833-NW, 2018-06-05 07:08:00,1SPT,180,Transcribed,Eric Pollard,None,Light,Light,None,None,,961529
+621-SW, 2017-06-06 07:07:00,1SPT,180,Transcribed,Eric Pollard,None,None,None,None,None,,961535
+63-NE, 2016-06-02 05:40:00,1SPT,180,Transcribed,Eric Pollard,None,None,None,None,None,,961531
+892-SE, 2016-07-03 00:00:00,1SPT,180,Transcribed,Eric Pollard,None,None,None,None,None,,961540
+182-SW, 2017-06-20 00:00:00,1SPT,180,Transcribed,Eric Pollard,,,,,,,961541
+823-NE, 2015-06-27 07:16:00,1SPT,180,Transcribed,Eric Pollard,None,None,Light,None,None,,961518
+730-NW, 2016-06-22 07:04:00,1SPT,180,Transcribed,Eric Pollard,None,None,None,Moderate,None,,961542
+W889-CCL, 2018-05-28 05:46:00,1SPT,180,Transcribed,Eric Pollard,None,None,None,None,None,,961525
+1265-SW, 2020-07-09 00:00:00,1SPT,180,Transcribed,Eric Pollard,None,Light,None,None,None,,961537
+1285-SE, 2016-06-06 07:07:00,1SPT,180,Transcribed,Eric Pollard,None,Heavy,None,None,Unbalanced Channels,,961544
+1329-SW, 2019-04-01 07:43:00,1SPT,180,Transcribed,Eric Pollard,None,Light,Light,None,None,,961538
+945-NW, 2019-06-02 07:11:00,1SPT,180,Transcribed,Eric Pollard,None,None,None,None,None,,961543
+854-NE, 2019-07-04 07:11:00,1SPT,180,Transcribed,Eric Pollard,None,Light,Light,Light,None,,961528
+511-SW, 2019-06-23 00:00:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,None,None,,961560
+63-NE, 2016-06-02 05:40:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,None,None,,961561
+670-NE, 2018-05-31 00:00:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,None,None,,961562
+854-SE, 2019-05-10 06:14:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,None,None,,961563
+414-NW, 2015-06-20 07:14:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,None,None,,961564
+BG-5-75, 2020-05-25 05:49:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,Moderate,None, road/train,961545
+241-NE, 2016-06-24 07:05:00,1SPT,180,Transcribed,Liam Brennan,None,Light,None,None,None,,961546
+1128-SW, 2019-06-18 05:34:00,1SPT,180,Transcribed,Liam Brennan,None,None,Light,None,None,,961547
+823-NE, 2015-06-27 07:16:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,Light,None,road,961548
+753-NW, 2017-06-12 05:35:00,1SPT,180,Transcribed,Liam Brennan,Light,None,None,None,None,,961549
+13-SW, 2015-05-20 05:57:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,None,None,,961550
+956-NW, 2016-06-08 05:36:00,1SPT,180,Transcribed,Liam Brennan,None,None,Light,None,None,,961551
+637-SW, 2018-04-13 07:13:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,None,None,,961552
+212-SE, 2017-06-01 07:11:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,None,None,,961553
+W889-CCL, 2018-05-28 05:46:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,None,None,,961555
+OG-EI-817-41-1, 2017-05-21 05:55:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,None,None,,961556
+892-SE, 2016-07-03 00:00:00,1SPT,180,Transcribed,Liam Brennan,Moderate,None,None,None,None,,961570
+945-NW, 2019-06-02 07:11:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,None,None,,961573
+1265-SW, 2020-07-09 00:00:00,1SPT,180,Bad Weather,Liam Brennan,,,,,,,961567
+1329-SW, 2019-04-01 07:43:00,1SPT,180,Bad Weather,Liam Brennan,,,,,,,961568
+474-NE, 2015-04-04 07:35:00,1SPT,180,Bad Weather,Liam Brennan,,,,,,,961569
+BG-5-75, 2020-05-25 05:49:00,1SPT,180,Transcribed,Zach Kahn,None,Light,Moderate,None,None,,961575
+241-NE, 2016-06-24 07:05:00,1SPT,180,Transcribed,Zach Kahn,None,Light,None,None,None,,961576
+1128-SW, 2019-06-18 05:34:00,1SPT,180,Transcribed,Zach Kahn,None,None,Light,None,None,,961577
+753-NW, 2017-06-12 05:35:00,1SPT,180,Transcribed,Zach Kahn,None,Heavy,None,None,None,,961579
+63-NE, 2016-06-02 05:40:00,1SPT,180,Transcribed,Zach Kahn,None,None,None,None,None,,961591
+OG-EI-817-41-1, 2017-05-21 05:55:00,1SPT,180,Transcribed,Zach Kahn,None,Light,Moderate,None,None,,961586
+945-NW, 2019-06-02 07:11:00,1SPT,180,Transcribed,Zach Kahn,None,Light,None,None,None,,961603
+854-NE, 2019-07-04 07:11:00,1SPT,180,Transcribed,Zach Kahn,None,Light,Light,None,None,,961588
+833-NW, 2018-06-05 07:08:00,1SPT,180,Transcribed,Zach Kahn,None,Moderate,Light,None,None,,961589
+W889-CCL, 2018-05-28 05:46:00,1SPT,180,Transcribed,Zach Kahn,None,Light,Light,None,None,,961585
+670-NE, 2018-05-31 00:00:00,1SPT,180,Transcribed,Zach Kahn,None,None,Light,None,None,,961592
+414-NW, 2015-06-20 07:14:00,1SPT,180,Transcribed,Zach Kahn,None,Light,None,None,None,,961594
+621-SW, 2017-06-06 07:07:00,1SPT,180,Transcribed,Zach Kahn,None,Light,None,None,None,,961595
+483-SW, 2017-05-17 00:00:00,1SPT,180,Transcribed,Zach Kahn,None,None,None,None,None,,961596
+474-NE, 2015-04-04 07:35:00,1SPT,180,Transcribed,Zach Kahn,None,Light,None,Light,None,,961599
+182-SW, 2017-06-20 00:00:00,1SPT,180,Transcribed,Zach Kahn,None,Light,None,None,None,,961601
+1265-SW, 2020-07-09 00:00:00,1SPT,180,Transcribed,Zach Kahn,None,Moderate,None,None,None,,961597
+483-SW, 2017-05-17 00:00:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,None,None,,961566
+892-SE, 2016-07-03 00:00:00,1SPT,180,Transcribed,Zach Kahn,None,Light,None,Moderate,None,Music,961600
+13-SW, 2015-05-20 05:57:00,1SPT,180,Transcribed,Zach Kahn,,,,,,,961580
+212-SE, 2017-06-01 07:11:00,1SPT,180,Transcribed,Zach Kahn,None,None,None,None,None,,961583
+730-NW, 2016-06-22 07:04:00,1SPT,180,Transcribed,Zach Kahn,None,Light,None,None,None,,961602
+854-SE, 2019-05-10 06:14:00,1SPT,180,Transcribed,Zach Kahn,None,Light,Light,None,None,,961593
+621-SW, 2017-06-06 07:07:00,1SPT,180,Transcribed,Liam Brennan,,,,,,,961565
+823-NE, 2015-06-27 07:16:00,1SPT,180,Transcribed,Zach Kahn,None,Light,Moderate,None,None,,961578
+1285-SE, 2016-06-06 07:07:00,1SPT,180,Transcribed,Zach Kahn,None,Heavy,None,None,None,,961604
+637-SW, 2018-04-13 07:13:00,1SPT,180,Transcribed,Zach Kahn,None,None,None,None,None,,961582
+1285-SE, 2016-06-06 07:07:00,1SPT,180,Transcribed,Liam Brennan,None,Moderate,None,None,None,,961574
+182-SW, 2017-06-20 00:00:00,1SPT,180,Transcribed,Liam Brennan,Moderate,None,None,None,None,,961571
+511-SW, 2019-06-23 00:00:00,1SPT,180,Transcribed,Zach Kahn,None,Light,None,None,None,,961590
+730-NW, 2016-06-22 07:04:00,1SPT,180,Transcribed,Liam Brennan,None,None,None,None,None,,961572
+956-NW, 2016-06-08 05:36:00,1SPT,180,Transcribed,Zach Kahn,None,Light,Light,None,None,,961581
+1480-SE, 2017-05-29 05:44:00,1SPT,180,Transcribed,Zach Kahn,None,Light,Moderate,None,None,,961587
+1329-SW, 2019-04-01 07:43:00,1SPT,180,Transcribed,Zach Kahn,None,Moderate,Moderate,None,None,,961598
+1080-NW, 2020-05-19 05:57:00,1SPT,180,Transcribed,Zach Kahn,None,Light,Moderate,None,None,,961584
+730-NW, 2016-06-22 07:04:00,1SPT,180,Transcribed,Michelle Knaggs,None,None,None,None,None,,963767
+13-SW, 2015-05-20 05:57:00,1SPT,180,Transcribed,Jon Van Arragon,None,None,None,None,None,,798689
+1329-SW, 2019-04-01 07:43:00,1SPT,180,Transcribed,Jon Van Arragon,None,Moderate,None,None,None,,798690
+474-NE, 2015-04-04 07:35:00,1SPT,180,Transcribed,Jon Van Arragon,None,None,None,None,None,"",798694
+730-NW, 2016-06-22 07:04:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,None,None,,798697
+483-SW, 2017-05-17 00:00:00,1SPT,180,Transcribed,Jon Van Arragon,None,None,None,None,None,,798678
+854-SE, 2019-05-10 06:14:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,None,None,,798699
+BG-5-75, 2020-05-25 05:49:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,Light,None,,798674
+945-NW, 2019-06-02 07:11:00,1SPT,180,Transcribed,Jon Van Arragon,None,Light,None,None,None,,798681
+833-NW, 2018-06-05 07:08:00,1SPT,180,Transcribed,Michelle Knaggs,Light,None,Moderate,None,None,,963754
+511-SW, 2019-06-23 00:00:00,1SPT,180,Transcribed,Michelle Knaggs,,,,,,,963755
+63-NE, 2016-06-02 05:40:00,1SPT,180,Transcribed,Michelle Knaggs,None,None,None,None,None,,963756

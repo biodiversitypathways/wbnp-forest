@@ -61,7 +61,7 @@ load('wbnp.RData')
 #| include: false
 
 wbnp_projects <- wildRtrax::wt_get_download_summary(sensor = 'ARU') |>
-  filter(grepl('^Wood Buffalo National Park Forest Songbird', project)) |>
+  filter(grepl('Wood Buffalo National Park', project)) |>
   select(project_id) |>
   pull()
 
@@ -120,6 +120,7 @@ wbnp_locs <- wbnp_main |>
   filter(!is.na(latitude)) |>
   select(location, latitude, longitude, year) |>
   distinct() |>
+  mutate(prorgram = case_when(grepl('PAD',location) ~ "Peace-Athabasca Delta", TRUE ~ "Forest Songbirds")) |>
   sf::st_as_sf(coords = c("longitude","latitude"), crs = 4326)
 
 repeats <- wbnp_locs |>
@@ -162,7 +163,7 @@ for (year in years) {
     data = filter(wbnp_locs, year == !!year),
     radius = 5,  # Size of the circles
     color = ~colorFactor(topo.colors(length(years)), domain = years)(year),
-    popup = ~paste("Location:", location, "<br>Year:", year),
+    popup = ~paste("Location:", location, "<br>Year:", year, "<br>Program:", program),
     group = as.character(year)
   )
 }
@@ -726,7 +727,7 @@ occ_plot <- ggplot(occ_graph_all %>%
 ```{r}
 #| warning: false
 #| echo: false
-#| eval: true
+#| eval: false
 #| include: true
 #| fig-width: 12
 #| fig-height: 12
