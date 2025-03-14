@@ -1,5 +1,5 @@
 ---
-title: "Report on the use of passive acoustic monitoring in Wood Buffalo National Park"
+title: "Report on the use of passive acoustic monitoring in Wood Buffalo National Park's Forested Region"
 format:
   html:
     grid:
@@ -29,7 +29,7 @@ citation-location: margin
 #| message: false
 
 library(tidyverse)
-library(wildRtrax)
+library(wildrtrax)
 library(unmarked)
 library(sf)
 library(terra)
@@ -60,7 +60,7 @@ load('wbnp.RData')
 #| eval: false
 #| include: false
 
-wbnp_projects <- wildRtrax::wt_get_download_summary(sensor = 'ARU') |>
+wbnp_projects <- wildrtrax::wt_get_download_summary(sensor = 'ARU') |>
   filter(grepl('Wood Buffalo National Park', project)) |>
   select(project_id) |>
   pull()
@@ -68,7 +68,7 @@ wbnp_projects <- wildRtrax::wt_get_download_summary(sensor = 'ARU') |>
 wbnp_main <-
   map_dfr(
     .x = wbnp_projects,
-    .f = ~ wildRtrax::wt_download_report(
+    .f = ~ wildrtrax::wt_download_report(
       project_id = .x,
       sensor_id = "ARU",
       weather_cols = T,
@@ -81,9 +81,9 @@ wbnp_main <-
 
 # Abstract
 
-Passive acoustic monitoring has proven to be a valuable tool for monitoring vocalizing species. Environmental sensors are becoming increasingly easy to program and can autonomously generate extensive data sets of the soundscape, becoming an invaluable resource for ecological integrity monitoring. Wood Buffalo National Park deployed autonomous recording units (ARUs) across `r wbnp_locs |> st_drop_geometry() |> select(location) |> distinct() |> tally()` locations during a comprehensive five-year survey. ARUs detected a total of `r nrow(distinct_spp)` species including birds, amphibians and mammals. The analysis revealed 
+Passive acoustic monitoring has proven to be a valuable tool for monitoring vocalizing species. Environmental sensors are becoming increasingly easy to program and can autonomously generate extensive data sets of the soundscape, becoming an invaluable resource for ecological integrity monitoring. Wood Buffalo National Park deployed autonomous recording units (ARUs) across `r wbnp_locs |> st_drop_geometry() |> select(location) |> distinct() |> tally()` locations during a comprehensive five-year survey. ARUs detected a total of `r nrow(distinct_spp)` species including birds, amphibians and mammals. The analysis revealed
 
-# Land Acknowledgement                                                                                                                   
+# Land Acknowledgement
 
 In the spirit of Reconciliation, we respectfully acknowledge that the lands of Wood Buffalo National Park where this study took place are the traditional territories of the Mikisew Cree First Nation, Athabasca Chipewyan First Nation, Fort Chipewyan Métis, Salt River First Nation, K'atl'odeeche First Nation, Deninu Kue First Nation, Fort Smith Métis Council, Hay River Métis Council, and the Fort Resolution Métis Council.
 
@@ -93,18 +93,18 @@ Human activities have been identified as key pressures and contributors to the g
 
 In 2018, Wood Buffalo National Park's Forested Region initiated a program incorporating autonomous recording units (ARUs) for passive acoustic monitoring (PAM) of the Park's wildlife. ARUs are compact environmental sensors that are designed to passively record the environment (@aru-overview), capturing vocalizing species like birds and amphibians, which is growing in use across the globe (@lots-of-pam). This technology enables resource managers to conduct prolonged surveys with minimal human interference. The subsequent data collected by these units contribute valuable information to ecological integrity metrics such as species richness, diversity, occupancy, and trends over time. This data aids decision-making and management within the Park. Given the rapid and ease of accumulating data from these units, maintaining a high standard of data integrity is paramount to ensure future data interoperability and sharing. [WildTrax](https://www.wildtrax.ca) is an online platform developed by the [Alberta Biodiversity Monitoring Institute (**ABMI**)](https://abmi.ca) for users of environmental sensors to help addresses these big data challenges by providing solutions to standardize, harmonize, and share data.
 
-The objectives of this report are to:                        
+The objectives of this report are to:
 
-* Describe the data management and processing procedures for the acoustic data collected from 2018 to 2023; 
-* Utilize traditional human tagging, visual scanning and automated recognition techniques to detect and count species and individuals heard on recordings; 
-* Define straightforward methods for evaluating species presence, species richness, and species occupancy over time at various locations; * Offer recommendations for ongoing monitoring approaches to contribute to the assessment of ecological integrity in forest ecosystems; 
-* Facilitate data publication to the public, resource managers, academic institutions, and any other relevant agencies
+-   Describe the data management and processing procedures for the acoustic data collected from 2018 to 2023;
+-   Utilize traditional human tagging, visual scanning and automated recognition techniques to detect and count species and individuals heard on recordings;
+-   Define straightforward methods for evaluating species presence, species richness, and species occupancy over time at various locations; \* Offer recommendations for ongoing monitoring approaches to contribute to the assessment of ecological integrity in forest ecosystems;
+-   Facilitate data publication to the public, resource managers, academic institutions, and any other relevant agencies
 
 # Methods
 
 Data were collected during the spring and summer seasons from `r min(wbnp_locs$year)` to `r max(wbnp_locs$year)`. A total of `r wbnp_locs |> st_drop_geometry() |> select(location) |> distinct() |> tally()` locations were surveyed over the five-year period:
 
-Locations were surveyed on rotation with `r length(repeats)` locations (`r repeats`) surveyed each year. A detailed list of all survey years can be found in Table 1 (@tbl-loc-summary) and illustrated in Figure 1 (@fig-locs). ARUs were deployed at the beginning of the breeding season in April-May, and rotated locations until their final retrieval in July-August. The ARUs were set to record for \[\]. On average, each ARU recorded for 
+Locations were surveyed on rotation with `r length(repeats)` locations (`r repeats`) surveyed each year. A detailed list of all survey years can be found in Table 1 (@tbl-loc-summary) and illustrated in Figure 1 (@fig-locs). ARUs were deployed at the beginning of the breeding season in April-May, and rotated locations until their final retrieval in July-August. The ARUs were set to record for \[\]. On average, each ARU recorded for
 
 ```{r}
 #| warning: false
@@ -114,13 +114,17 @@ Locations were surveyed on rotation with `r length(repeats)` locations (`r repea
 #| include: true
 #| results: hide
 
+ii <- wbnp_main |>
+  wt_location_distances()
+
 wbnp_locs <- wbnp_main |>
   filter(!is.na(latitude)) |>
   mutate(year = lubridate::year(recording_date_time)) |>
   filter(!is.na(latitude)) |>
   select(location, latitude, longitude, year) |>
   distinct() |>
-  mutate(prorgram = case_when(grepl('PAD',location) ~ "Peace-Athabasca Delta", TRUE ~ "Forest Songbirds")) |>
+  mutate(program = case_when(grepl('CBM', location) ~ "CBM Pilot", grepl('NWTI', location) ~ 'Arrival Time', grepl('PAD',location) ~ "Peace-Athabasca Delta", TRUE ~ "Forest Songbirds")) |>
+  filter(program == "Forest Songbirds") |>
   sf::st_as_sf(coords = c("longitude","latitude"), crs = 4326)
 
 repeats <- wbnp_locs |>
@@ -137,7 +141,6 @@ repeats <- wbnp_locs |>
 
 ## Data collection and management
 
-
 ```{r, echo=F}
 #| warning: false
 #| echo: false
@@ -150,36 +153,38 @@ repeats <- wbnp_locs |>
 #| fig-cap: ARU survey locations
 #| label: fig-locs
 
-# Create a leaflet map
-map <- leaflet(wbnp_locs) %>%
+wbnp_shp <- read_sf('./assets/National_Parks_and_National_Park_Reserves_of_Canada_Legislative_Boundaries.shp') |>
+  filter(grepl('WOOD',adminAreaN))
+wbnp_shp <- st_transform(wbnp_shp, st_crs(wbnp_locs)) |> st_make_valid()
+
+palette <- colorFactor(palette = "viridis", domain = wbnp_locs$type)
+
+leaflet() %>%
   addTiles() %>%  # Add default OpenStreetMap map tiles
-  addMeasure() %>%
-  addMiniMap(position = "bottomleft")
-
-# Add a layer for each year
-years <- unique(wbnp_locs$year)
-for (year in years) {
-  map <- map %>% addCircleMarkers(
-    data = filter(wbnp_locs, year == !!year),
-    radius = 5,  # Size of the circles
-    color = ~colorFactor(topo.colors(length(years)), domain = years)(year),
-    popup = ~paste("Location:", location, "<br>Year:", year, "<br>Program:", program),
-    group = as.character(year)
+  addPolygons(
+    data = wbnp_shp,
+    fillColor = "#29ABE2",
+    color = "black",
+    weight = 1,
+    fillOpacity = 0.4,
+    popup = ~paste("Park:", adminAreaN)
+  ) %>%
+  addCircleMarkers(
+    data = wbnp_locs,
+    popup = ~paste("Location:", wbnp_locs$location, "<br>", wbnp_locs$Target),
+    radius = 5  # Adjust marker size
+  ) %>%
+  addMeasure(primaryLengthUnit = "meters", primaryAreaUnit = "sqmeters") %>%
+  addMiniMap(position = "bottomleft") %>%
+  addLegend(
+    "bottomright",
+    pal = palette,
+    values = wbnp_locs$Target,  # Use the same domain as the palette
+    title = "Wood Buffalo Sites and Projects",
+    opacity = 1
   )
-}
-
-# Add layers control
-map <- map %>%
-  addLayersControl(
-    overlayGroups = as.character(years),
-    options = layersControlOptions(collapsed = FALSE)
-  )
-
-# Print the map
-map
   
 ```
-
 
 ## Community data processing
 
@@ -243,6 +248,8 @@ A total of `r nrow(distinct_spp)` species were found across the five years. @fig
 
 spp_rich_location <- wbnp_main |>
   as_tibble() |>
+  mutate(program = case_when(grepl('CBM', location) ~ "CBM Pilot", grepl('NWTI', location) ~ 'Arrival Time', grepl('PAD',location) ~ "Peace-Athabasca Delta", TRUE ~ "Forest Songbirds")) |>
+  filter(program == "Forest Songbirds") |>
   wt_tidy_species(remove = c("mammal","amphibian","abiotic","insect","unknown"), zerofill = T) |>
   mutate(year = lubridate::year(recording_date_time)) |>
   select(location, year, species_code) |>
@@ -285,6 +292,7 @@ spp_rich_location |>
   ggtitle('Species richness at each location surveyed for each year')
 
 ```
+
 ```{r}
 #| warning: false
 #| echo: false
@@ -459,7 +467,7 @@ shannon
 
 ## Species occupancy
 
-We selected `` species to represent the forest songbird community into 4 separate habitat nesting guilds (see @tbl-bird-guilds): conifer (@fig-spp-occ-conifer), deciduous (@fig-spp-occ-decid), treed / shrubby (@fig-spp-occ-tss) and open (@fig-spp-occ-open). Analysis of species occupancy revealed diverse and varied changes across these species. Analytically, many models were singular, and a few exhibited overdispersion (indicated by *c-hat* in @tbl-c-hat), likely due to low detections or a limited sample size of spatial locations. Ubiquitous species such as [], demonstrated stable site occupancy across the years. Generalist species or those capable of capitalizing on utilizing mixed habitats, exemplified by [], also maintained consistent occupancy levels. The occurrence of [2023 fire] led to notable breakpoints in the occupancy of certain species: [RESULTS]
+We selected \`\` species to represent the forest songbird community into 4 separate habitat nesting guilds (see @tbl-bird-guilds): conifer (@fig-spp-occ-conifer), deciduous (@fig-spp-occ-decid), treed / shrubby (@fig-spp-occ-tss) and open (@fig-spp-occ-open). Analysis of species occupancy revealed diverse and varied changes across these species. Analytically, many models were singular, and a few exhibited overdispersion (indicated by *c-hat* in @tbl-c-hat), likely due to low detections or a limited sample size of spatial locations. Ubiquitous species such as \[\], demonstrated stable site occupancy across the years. Generalist species or those capable of capitalizing on utilizing mixed habitats, exemplified by \[\], also maintained consistent occupancy levels. The occurrence of \[2023 fire\] led to notable breakpoints in the occupancy of certain species: [RESULTS]
 
 ```{r}
 #| warning: false
@@ -469,7 +477,7 @@ We selected `` species to represent the forest songbird community into 4 separat
 
 #wtsp_occ <- ss_occ_plot_loop(pei_main, "WTSP")
 #amro_occ <- ss_occ_plot_loop(pei_main, "AMRO")
-revi_occ <- ss_occ_plot_loop(pei_main, "REVI")
+revi_occ <- ss_occ_plot_loop(wbnp_main, "REVI")
 #coye_occ <- ss_occ_plot_loop(pei_main, "COYE")
 amre_occ <- ss_occ_plot_loop(pei_main, "AMRE")
 btnw_occ <- ss_occ_plot_loop(pei_main, "BTNW")
