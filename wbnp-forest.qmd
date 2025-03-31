@@ -157,7 +157,7 @@ wbnp_shp <- read_sf('./assets/National_Parks_and_National_Park_Reserves_of_Canad
   filter(grepl('WOOD',adminAreaN))
 wbnp_shp <- st_transform(wbnp_shp, st_crs(wbnp_locs)) |> st_make_valid()
 
-palette <- colorFactor(palette = "viridis", domain = wbnp_locs$type)
+palette <- colorFactor(palette = "plasma", domain = wbnp_locs$type)
 
 leaflet() %>%
   addTiles() %>%  # Add default OpenStreetMap map tiles
@@ -282,12 +282,11 @@ distinct_spp <- wbnp_main |>
 #| cap-location: margin
 
 spp_rich_location |>
-  ggplot(aes(x=year, y=species_count, colour=year)) +
-  geom_line() +
-  geom_point() +
-  facet_wrap(~location) +
+  ggplot(aes(x=year, y=species_count, fill=year, group=year)) +
+  geom_boxplot() +
+  geom_point(alpha = 0.7) +
   theme_bw() +
-  scale_colour_viridis_c() +
+  scale_fill_viridis_c(alpha = 0.7, option = "plasma") +
   xlab('Year') + ylab('Species richness') +
   ggtitle('Species richness at each location surveyed for each year')
 
@@ -349,11 +348,35 @@ spp_rich_annual_plot
 #| message: false
 #| include: true
 #| label: tbl-bird-guilds
-#| tbl-cap: Common bird forest species guilds. For nesting habitat; Ag = Agricultural, Be = Beach, Bo = Bog, CW = Coniferous Woodlands, ES = Early Successional, MW = Mixed Woodlands, OW = Open Woodlands, TSS = Treed/Shrubby Swamp, Ur = Urban. Species from CW, MW, OW, TSS were used for analysis.
+#| tbl-cap: Foraging guild classification of songbird species in Wood Buffalo National Park Monitoring Program
 
-guilds <- read_csv("bird_guilds.csv") |>
-  select(species_common_name, habitat_nesting) |>
-  filter(habitat_nesting %in% c("CW","MW","OW","TSS")) 
+guilds <- data.frame(
+  species_code = c("WTSP", "DEJU", 
+                   "ALFL", "LEFL", 
+                   "BAWW", 
+                   "YBSA", 
+                   "HETH", "OVEN", 
+                   "TEWA", "YEWA", 
+                   "SWTH", "WETA"),
+  species_common_name = c("White-throated Sparrow", "Dark-eyed Junco", 
+                          "Alder Flycatcher", "Least Flycatcher", 
+                          "Black-and-white warbler", 
+                          "Yellow-bellied Sapsucker", 
+                          "Hermit thrush", "Ovenbird", 
+                          "Tennessee Warbler", "Yellow Warbler", 
+                          "Swainson’s Thrush", "Western Tanager"),
+  guild = c("Granivore: ground to lower canopy gleaner", 
+            "Granivore: ground to lower canopy gleaner",
+            "Insectivore: air hawker", "Insectivore: air hawker",
+            "Insectivore: bark gleaner", 
+            "Insectivore: bark excavator",
+            "Insectivore: ground gleaner", "Insectivore: ground gleaner",
+            "Insectivore: canopy gleaner", "Insectivore: canopy gleaner",
+            "Insectivore: canopy gleaner", "Insectivore: canopy gleaner")
+)
+
+wbnp_main_guilds <- wbnp_main %>%
+  left_join(guilds, by = c("species_code", "species_common_name"))
 
 kable(guilds)
 
@@ -379,25 +402,14 @@ wbnp_main |>
   mutate(julian = lubridate::yday(recording_date_time),
          month= month(recording_date_time),
          year = factor(year(recording_date_time))) |>
-  inner_join(guilds |> select(species_common_name, habitat_nesting)) |>
+  inner_join(guilds |> select(species_code, guild)) |>
   arrange(species_code) |>
-  filter(habitat_nesting %in% c("CW","MW","OW","TSS")) |>
   group_by(species_code) |>
   add_tally() |>
   ungroup() |>
-  filter(!n < 100) |>
-  mutate(habitat_nesting = case_when(
-    habitat_nesting == "CW" ~ "Coniferous Woodland",
-    habitat_nesting == "MW" ~ "Mixedwood",
-    habitat_nesting == "OW" ~ "Open Woodland",
-    habitat_nesting == "TSS" ~ "Tree Shrub / Swamp",
-    TRUE ~ as.character(habitat_nesting)
-  )) |>
-  rename("Nesting habitat" = habitat_nesting) |>
-  ggplot(aes(x = julian, y = species_common_name, fill = `Nesting habitat`)) + 
+  ggplot(aes(x = julian, y = species_common_name, fill = guild)) + 
   geom_density_ridges(scale = 3, rel_min_height = 0.005, alpha = 0.4) + 
   scale_fill_viridis_d() +
-  facet_wrap(~year, nrow = 1) +
   xlim(120,210) +
   theme_bw() +
   xlab("Day of Year") + 
@@ -411,58 +423,44 @@ Shannon's diversity was stable based on results. (see @fig-shannon.)
 
 ```{r}
 #| warning: false
-#| eval: false
+#| echo: true
+#| eval: true
 #| message: false
-#| include: false
-#| echo: false
+#| include: true
 #| results: hide
+#| fig-align: center
+#| fig-cap: Shannon diversity index over years
+#| label: fig-shannon
+#| cap-location: bottom
+#| code-fold: true
 
-raw_dog <- wbnp_main |> 
-  as_tibble() |>
-  wt_tidy_species(remove = c("mammal","amphibian","abiotic","insect","unknown"), zerofill = T) |>
-  wt_replace_tmtt() |>
+shannon_d <- wbnp_main |> 
+  filter(!grepl('BS',location)) |>
+  wt_tidy_species(remove = c("mammal","amphibian","abiotic","insect","unknown"), zerofill = F) |>
+  inner_join(wt_get_species() |> select(species_code, species_class, species_order), by = "species_code") |>
   select(location, recording_date_time, species_code, species_common_name, individual_order, individual_count) |>
   distinct() |>
   group_by(location, recording_date_time, species_code, species_common_name) |>
   summarise(count = max(individual_order)) |>
   ungroup() |>
   pivot_wider(names_from = species_code, values_from = count, values_fill = 0) |>
-  as.data.frame()
-
-shannon <- raw_dog |>
-  pivot_longer(cols = -(location:species_common_name), names_to = "species", values_to = "count") %>%
-  group_by(location, year = lubridate::year(recording_date_time), species) %>%
-  summarise(total_count = sum(count)) %>%
-  ungroup() %>%
-  filter(!total_count == 0) %>%
-  group_by(year) %>%
+  pivot_longer(cols = -(location:species_common_name), names_to = "species", values_to = "count") |>
+  group_by(location, year = year(recording_date_time), species) |>
+  summarise(total_count = sum(count)) |>
+  ungroup() |>
+  group_by(location, year) |>
   summarise(shannon_index = diversity(total_count, index = "shannon")) |>
   ungroup() |>
-  ggplot(aes(x = year, y = shannon_index, color = year)) +
-  geom_line() +
-  geom_point() +
-  labs(title = "Shannon Diversity Index Over Years",
-       x = "Year",
-       y = "Shannon Diversity Index") +
-  theme_minimal() +
-  scale_colour_viridis_c() +
-  ylim(4,6)
+  ggplot(aes(x = factor(year), y = shannon_index, fill = factor(year))) +
+  geom_boxplot() +
+  geom_point(alpha = 0.6, colour = "grey") +
+  labs(x = "Year",
+       y = "Shannon diversity index per location") +
+  theme_bw() +
+  theme(legend.position = "none") +
+  scale_fill_viridis_d(alpha = 0.7)
 
-```
-
-```{r}
-#| warning: false
-#| echo: false
-#| eval: true
-#| include: true
-#| fig-width: 8
-#| fig-height: 8
-#| fig-cap: Shannon's diversity across years for all locations surveyed.
-#| label: fig-shannon
-#| fig-column: page-right
-
-shannon
-
+shannon_d
 ```
 
 ## Species occupancy
@@ -748,5 +746,71 @@ occ_plot <- ggplot(occ_graph_all %>%
 ggarrange(btnw_occ, blbw_occ, gcki_occ, yrwa_occ, mawa_occ, btbw_occ, bhvi_occ)
 
 ```
+
+
+```{r}
+#| eval: false
+
+wbnp_main <- wbnp_main %>%
+  filter(species_common_name %in% c("White-throated Sparrow", "Dark-eyed Junco", "Alder Flycatcher", "Least Flycatcher", 
+                                    "Black-and-white Warbler", "Yellow-bellied Sapsucker", "Hermit Thrush", "Ovenbird", 
+                                    "Tennessee Warbler", "Yellow Warbler", "Swainson’s Thrush", "Western Tanager"))
+
+# Relative abundance calculation
+abundance_data <- wbnp_main |>
+  mutate(year = year(recording_date_time)) |>
+  group_by(year, location, species_common_name) |>
+  summarize(total_count = max(individual_order, na.rm = TRUE), .groups = "drop") |>
+  group_by(year) |>
+  mutate(effort = n_distinct(location),
+         relative_abundance = total_count / effort)
+
+# 5-year trend using GAM
+trend_model <- gam(relative_abundance ~ s(year, k=5), family=poisson, data = abundance_data)
+summary(trend_model)
+
+shannon_d <- wbnp_main |> 
+  wt_tidy_species(remove = c("mammal","amphibian","abiotic","insect","unknown"), zerofill = F) |>
+  inner_join(wt_get_species() |> select(species_code, species_class, species_order), by = "species_code") |>
+  select(location, recording_date_time, species_code, species_common_name, individual_order, individual_count) |>
+  distinct() |>
+  group_by(location, recording_date_time, species_code, species_common_name) |>
+  summarise(count = max(individual_order)) |>
+  ungroup() |>
+  pivot_wider(names_from = species_code, values_from = count, values_fill = 0) |>
+  pivot_longer(cols = -(location:species_common_name), names_to = "species", values_to = "count") |>
+  group_by(location, year = year(recording_date_time), species) |>
+  summarise(total_count = sum(count)) |>
+  ungroup() |>
+  group_by(location, year) |>
+  summarise(shannon_index = diversity(total_count, index = "shannon")) |>
+  ungroup() 
+
+ggplot(shannon_d, aes(x = factor(year), y = shannon_index, fill = factor(year))) +
+  geom_boxplot() +
+  geom_point(alpha = 0.6, colour = "grey") +
+  labs(x = "Year",
+       y = "Shannon diversity index per location") +
+  theme_bw() +
+  theme(legend.position = "none") +
+  scale_fill_viridis_d(alpha = 0.7)
+
+# Model diversity trend
+diversity_model <- lm(shannon_index ~ year, data = shannon_d)
+summary(diversity_model)
+
+```
+
+
+```{r}
+#| eval: false
+# Normalize for uneven sampling using mixed-effects model
+mixed_model <- glmer(relative_abundance ~ year + (1|location), 
+                     family = poisson, data = abundance_data)
+summary(mixed_model)
+
+```
+
+
 
 # Discussion
