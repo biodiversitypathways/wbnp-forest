@@ -62,6 +62,7 @@ load('wbnp.RData')
 #| echo: false
 #| eval: false
 #| include: false
+#| code-fold: true
 
 wbnp_projects <- wildrtrax::wt_get_download_summary(sensor = 'ARU') |>
   filter(grepl('Wood Buffalo National Park Forest Songbird Monitoring', project)) |>
@@ -84,7 +85,7 @@ wbnp_main <-
 
 # Abstract
 
-Passive acoustic monitoring has proven to be a valuable tool for monitoring vocalizing species. Environmental sensors are becoming increasingly easy to program and can autonomously generate extensive data sets of the soundscape, becoming an invaluable resource for ecological integrity monitoring. Wood Buffalo National Park deployed autonomous recording units (ARUs) across `r wbnp_locs |> st_drop_geometry() |> select(location) |> distinct() |> tally()` locations during a comprehensive five-year survey. ARUs detected a total of `r nrow(distinct_spp)` species including birds, amphibians and mammals. The analysis revealed
+Passive acoustic monitoring has proven to be an effective tool for tracking vocalizing species. Advances in environmental sensors have made them increasingly easy to deploy and program, allowing them to autonomously generate extensive soundscape datasets. These datasets have become invaluable for monitoring ecological integrity. Wood Buffalo National Park deployed autonomous recording units (ARUs) across `r wbnp_locs |> st_drop_geometry() |> select(location) |> distinct() |> tally()` locations as part of a comprehensive six-year survey. The ARUs detected a total of `r nrow(distinct_spp)` species, including birds, amphibians, and mammals. Analysis of the data showed that species diversity and richness remained relatively stable over time, though relative abundance trends varied among major forest guilds. Granivores, in particular, exhibited the largest significant increase in relative abundance. Ongoing monitoring of these sites is critical for detecting shifts in species communities, particularly as climate-driven changes in landcover continue to rapidly alter habitat conditions.
 
 # Land Acknowledgement
 
@@ -117,6 +118,7 @@ Data were collected during the spring and summer seasons from `r min(wbnp_locs$y
 #| fig-align: center
 #| fig-cap: Locations from Wood Buffalo National Park ARU Monitoring Program. 
 #| label: fig-aru-monitoring-locations
+#| code-fold: true
 
 wbnp_locs <- wbnp_main |>
   mutate(year = lubridate::year(recording_date_time)) |>
@@ -207,6 +209,7 @@ The principal goal for data processing was to describe the acoustic community of
 #| include: true
 #| label: tbl-verified
 #| tbl-cap: Proportion of tags verified
+#| code-fold: true
 
 all_tags <- wbnp_main |> 
   tally() |>
@@ -230,6 +233,7 @@ kable(verified_tags)
 #| include: true
 #| label: tbl-tmtt
 #| tbl-cap: TMTT tags
+#| code-fold: true
 
 tmtt_tags <- wbnp_main |>
   select(location, recording_date_time, species_code, individual_count) |>
@@ -251,6 +255,7 @@ A total of `r nrow(distinct_spp)` species were found across the five years. @fig
 #| message: false
 #| echo: false
 #| eval: false
+#| code-fold: true
 #| include: false
 
 spp_rich_location <- wbnp_main |>
@@ -287,6 +292,7 @@ distinct_spp <- wbnp_main |>
 #| fig-cap: Species richness at forest monitoring locations across years
 #| label: fig-spp-rich-locs
 #| cap-location: margin
+#| code-fold: true
 
 spp_rich_location |>
   ggplot(aes(x=year, y=species_count, fill=year, group=year)) +
@@ -307,6 +313,7 @@ spp_rich_location |>
 #| include: true
 #| label: tbl-bird-guilds
 #| tbl-cap: Foraging guild classification of songbird species in Wood Buffalo National Park Monitoring Program
+#| code-fold: true
 
 guilds <- guild_lookup <- tibble::tribble(
   ~species_common_name, ~guild,
@@ -360,6 +367,7 @@ wbnp_activity <- wbnp_main |>
 #| fig-cap: Seasonal detection activity of most commonly detected forest species
 #| label: fig-spp-activity
 #| cap-location: margin
+#| code-fold: true
 
 ggplot(wbnp_activity, aes(x = julian, y = species_common_name, fill = guild)) + 
   geom_density_ridges(scale = 3, rel_min_height = 0.005, alpha = 0.4) + 
@@ -431,6 +439,12 @@ ggplot(shannon_d, aes(x = factor(year), y = shannon_index, fill = factor(year)))
 ## Trends
 
 ```{r}
+#| warning: false
+#| echo: true
+#| eval: false
+#| message: false
+#| include: true
+#| code-fold: true
 
 yearly_shannon <- shannon_d %>%
   group_by(year) %>%
