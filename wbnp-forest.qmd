@@ -46,6 +46,8 @@ library(MuMIn)
 library(AICcmodavg)
 library(leaflet)
 library(modifiedmk)
+library(mgcv)
+library(ggbreak)
 
 #wt_auth()
 
@@ -138,6 +140,9 @@ locs_summary <- wbnp_locs_map |>
   pivot_wider(names_from = year, values_from = value, values_fill = 0) |>
   rename('Location' = location)
 
+years <- sort(unique(wbnp_locs_map$year))
+pal <- colorFactor(palette = "Set1", domain = years)  # Set1 has distinct colors
+
 leaflet() %>%
   addTiles() %>%
   addPolygons(
@@ -149,13 +154,19 @@ leaflet() %>%
   ) %>%
   addCircleMarkers(
     data = wbnp_locs_map,
-    popup = ~paste("Location:", location, "<br>"),
+    popup = ~paste("Location:", location, "<br>", "Year:", year),
     fillOpacity = 1,
-    color = "black", 
-    radius = 6 
+    color = ~pal(year),  # Color based on year
+    radius = 6
   ) %>%
   addMeasure(primaryLengthUnit = "meters", primaryAreaUnit = "sqmeters") %>%
-  addMiniMap(position = "bottomleft")
+  addMiniMap(position = "bottomleft") %>%
+  addLegend(
+    "topright", 
+    pal = pal, 
+    values = wbnp_locs_map$year,
+    title = "Year"
+  )
 
 
 
@@ -297,35 +308,21 @@ spp_rich_location |>
 #| label: tbl-bird-guilds
 #| tbl-cap: Foraging guild classification of songbird species in Wood Buffalo National Park Monitoring Program
 
-guilds <- data.frame(
-  species_code = c("WTSP", "DEJU", 
-                   "ALFL", "LEFL", 
-                   "BAWW", 
-                   "YBSA", 
-                   "HETH", "OVEN", 
-                   "TEWA", "YEWA", 
-                   "SWTH", "WETA"),
-  species_common_name = c("White-throated Sparrow", "Dark-eyed Junco", 
-                          "Alder Flycatcher", "Least Flycatcher", 
-                          "Black-and-white warbler", 
-                          "Yellow-bellied Sapsucker", 
-                          "Hermit thrush", "Ovenbird", 
-                          "Tennessee Warbler", "Yellow Warbler", 
-                          "Swainson’s Thrush", "Western Tanager"),
-  guild = c("Granivore: ground to lower canopy gleaner", 
-            "Granivore: ground to lower canopy gleaner",
-            "Insectivore: air hawker", "Insectivore: air hawker",
-            "Insectivore: bark gleaner", 
-            "Insectivore: bark excavator",
-            "Insectivore: ground gleaner", "Insectivore: ground gleaner",
-            "Insectivore: canopy gleaner", "Insectivore: canopy gleaner",
-            "Insectivore: canopy gleaner", "Insectivore: canopy gleaner")
+guilds <- guild_lookup <- tibble::tribble(
+  ~species_common_name, ~guild,
+  "White-throated Sparrow", "Granivore: ground to lower canopy gleaner",
+  "Dark-eyed Junco", "Granivore: ground to lower canopy gleaner",
+  "Alder Flycatcher", "Insectivore: air hawker",
+  "Least Flycatcher", "Insectivore: air hawker",
+  "Black-and-white Warbler", "Insectivore: bark gleaner",
+  "Yellow-bellied Sapsucker", "Insectivore: bark excavator",
+  "Hermit Thrush", "Insectivore: ground gleaner",
+  "Ovenbird", "Insectivore: ground gleaner",
+  "Tennessee Warbler", "Insectivore: canopy gleaner",
+  "Yellow Warbler", "Insectivore: canopy gleaner",
+  "Swainson's Thrush", "Insectivore: canopy gleaner",
+  "Western Tanager", "Insectivore: canopy gleaner"
 )
-
-wbnp_main_guilds <- wbnp_main %>%
-  left_join(guilds, by = c("species_code", "species_common_name"))
-
-kable(guilds)
 
 ```
 
@@ -344,7 +341,7 @@ wbnp_activity <- wbnp_main |>
   mutate(julian = lubridate::yday(recording_date_time),
          month= month(recording_date_time),
          year = factor(year(recording_date_time))) |>
-  inner_join(guilds |> dplyr::select(species_code, guild)) |>
+  inner_join(guilds |> dplyr::select(species_common_name, guild), by = "species_common_name") |>
   arrange(species_code) |>
   group_by(species_code) |>
   add_tally() |>
@@ -360,8 +357,6 @@ wbnp_activity <- wbnp_main |>
 #| include: true
 #| results: hide
 #| fig-align: center
-#| fig-width: 10
-#| fig-height: 10
 #| fig-cap: Seasonal detection activity of most commonly detected forest species
 #| label: fig-spp-activity
 #| cap-location: margin
@@ -369,7 +364,7 @@ wbnp_activity <- wbnp_main |>
 ggplot(wbnp_activity, aes(x = julian, y = species_common_name, fill = guild)) + 
   geom_density_ridges(scale = 3, rel_min_height = 0.005, alpha = 0.4) + 
   scale_fill_viridis_d(option = "plasma") +
-  xlim(120,210) +
+  xlim(140,200) +
   theme_bw() +
   xlab("Day of Year") + 
   ylab("Species")
@@ -391,10 +386,9 @@ Shannon's diversity was stable based on results. (see @fig-shannon.)
 #| code-fold: true
 
 shannon_d <- wbnp_main |> 
-  filter(!grepl('BS',location)) |>
   wt_tidy_species(remove = c("mammal","amphibian","abiotic","insect","unknown"), zerofill = F) |>
-  inner_join(wt_get_species() |> select(species_code, species_class, species_order), by = "species_code") |>
-  select(location, recording_date_time, species_code, species_common_name, individual_order, individual_count) |>
+  inner_join(wt_get_species() |> dplyr::select(species_code, species_class, species_order), by = "species_code") |>
+  dplyr::select(location, recording_date_time, species_code, species_common_name, individual_order, individual_count) |>
   distinct() |>
   group_by(location, recording_date_time, species_code, species_common_name) |>
   summarise(count = max(individual_order)) |>
@@ -434,109 +428,121 @@ ggplot(shannon_d, aes(x = factor(year), y = shannon_index, fill = factor(year)))
 
 ```
 
-
+## Trends
 
 ```{r}
+
+yearly_shannon <- shannon_d %>%
+  group_by(year) %>%
+  summarise(mean_shannon = mean(shannon_index, na.rm = TRUE),
+            sd_shannon = sd(shannon_index, na.rm = TRUE),
+            n_sites = n(),
+            .groups = "drop")
+mix_shannon <- lmer(shannon_index ~ year + (1 | location), data = shannon_d)
+yearly_shannon <- yearly_shannon %>%
+  mutate(mix_fit = predict(mix_shannon, newdata = yearly_shannon, re.form = NA))
+
+ggplot(yearly_shannon, aes(x = year, y = mean_shannon)) +
+  geom_point(size = 2, color = "#2c7fb8") +                   # points for mean Shannon
+  geom_line(aes(y = mix_fit), color = "#d95f02", size = 1.2) + # predicted trend from mixed model
+  geom_ribbon(aes(ymin = mean_shannon - sd_shannon, 
+                  ymax = mean_shannon + sd_shannon),
+              alpha = 0.2, fill = "#2c7fb8") +                 # variability around mean
+  labs(title = "Shannon Diversity Trend Over Years",
+       x = "Year",
+       y = "Mean Shannon Index",
+       caption = "Points = yearly mean; Ribbon = ±1 SD; Line = mixed model prediction") +
+  theme_minimal(base_size = 14)
+
+```
+
+```{r}
+#| warning: false
+#| echo: true
 #| eval: false
+#| message: false
+#| include: true
 #| code-fold: true
 
-wbnp_focal <- wbnp_main %>%
-  filter(species_common_name %in% c(
-    "White-throated Sparrow", "Dark-eyed Junco", "Alder Flycatcher", "Least Flycatcher", 
-    "Black-and-white Warbler", "Yellow-bellied Sapsucker", "Hermit Thrush", "Ovenbird", 
-    "Tennessee Warbler", "Yellow Warbler", "Swainson’s Thrush", "Western Tanager"
-  )) %>%
-  mutate(year = year(recording_date_time))
+plot_focal <- 
+  wbnp_main |>
+  inner_join(guilds, by = "species_common_name") |>
+  mutate(year = year(recording_date_time)) |>
+  dplyr::select(location, year, species_code, individual_order, individual_count) |>
+  group_by(location, year, species_code) |>
+  summarise(individual_order = mean(individual_order)) |>
+  ungroup() |>
+  mutate(year = round(year,0)) |>
+  group_by(year, location, species_code) |>
+  summarise(
+    total_abundance = sum(individual_order),  
+    sample_size = n_distinct(location)
+  ) |>
+  ungroup() |>
+  mutate(normalized_count = total_abundance / sample_size)
 
-abundance_data <- wbnp_focal %>%
-  group_by(year, location, species_common_name) %>%
-  summarise(total_count = max(individual_order, na.rm = TRUE), .groups = "drop") %>%
-  group_by(year, location) %>%
-  mutate(effort = 1,   # each location = 1 unit of effort
-         relative_abundance = total_count) %>%
-  ungroup()
+plot_focal_guild <- 
+  wbnp_main |>
+  inner_join(guilds, by = "species_common_name") |>
+  mutate(year = year(recording_date_time)) |>
+  dplyr::select(location, year, guild, species_code, individual_order, individual_count) |>
+  group_by(location, year, guild, species_code) |>
+  summarise(individual_order = mean(individual_order)) |>
+  ungroup() |>
+  mutate(year = round(year,0)) |>
+  group_by(year, location,  guild) |>
+  summarise(
+    total_abundance = sum(individual_order),  
+    sample_size = n_distinct(location)
+  ) |>
+  ungroup() |>
+  mutate(normalized_count = total_abundance / sample_size)
 
-abund_sp <- abundance_data %>%
-  group_by(location, year, species_common_name) %>%
-  summarise(abund = sum(relative_abundance), .groups = "drop") %>%
-  pivot_wider(
-    id_cols = c(location, year),
-    names_from = species_common_name,
-    values_from = abund,
-    values_fill = 0
-  )
-
-trait_df <- guilds %>%
-  dplyr::select(species_common_name, guild) %>%
-  distinct() %>%
-  column_to_rownames("species_common_name")
-
-trait_mat <- model.matrix(~ guild - 1,
-                          data = trait_df)
-
-a_mat <- abund_sp %>% dplyr::select(-location, -year) %>% as.matrix()
-
-common <- intersect(colnames(a_mat), rownames(trait_mat))
-a_mat2     <- a_mat[, common, drop = FALSE]
-trait_mat2 <- trait_mat[common, , drop = FALSE]
-
-nonzero   <- rowSums(a_mat2) > 0
-a_mat3    <- a_mat2[nonzero, , drop = FALSE]
-sites3    <- abund_sp[nonzero, c("location","year")]
-
-fd <- dbFD(x = trait_mat2, a = a_mat3, calc.FRic = FALSE, calc.CWM = FALSE, messages = FALSE)
-
-loc_year_rao <- sites3 %>%
-  mutate(RaoQ = fd$RaoQ)
-
-yearly_rao <- loc_year_rao %>%
-  group_by(year) %>%
-  summarise(meanRao = mean(RaoQ), .groups = "drop")
-
-mk        <- mmkh(yearly_rao$meanRao, ci = 0.95)
-lm_trend  <- lm(meanRao ~ year, data = yearly_rao)
-mix_trend <- lmer(RaoQ ~ year + (1|location), data = loc_year_rao)
-seg       <- segmented(lm(meanRao ~ year, data = yearly_rao), seg.Z = ~ year)
-
-yearly_rao <- yearly_rao |>
-  mutate(
-    lm_fit = predict(lm_trend, newdata = yearly_rao),
-    mix_fit = predict(mix_trend, newdata = yearly_rao, re.form = NA),
-    seg_fit = predict(seg, newdata = yearly_rao)
-  )
 ```
 
 ```{r}
+#| warning: false
+#| echo: true
 #| eval: true
+#| message: false
+#| include: true
+#| results: hide
+#| fig-width: 10
+#| fig-height: 8
+#| fig-align: center
+#| fig-cap: Normalized abundance trend over time for target species
+#| label: fig-abundance-normalized
+#| cap-location: bottom
+#| code-fold: true
 
-ggplot(yearly_rao, aes(x = year, y = meanRao)) +
-  geom_point(color = "#213b6e", size = 2) +
-  geom_line(aes(y = lm_fit, color = "Linear Model"), size = 1.2, linetype = "dashed") +
-  geom_line(aes(y = mix_fit, color = "Mixed Effects"), size = 1.2, linetype = "dotted") +
-  geom_line(aes(y = seg_fit, color = "Segmented Trend"), size = 1.2) +
-  scale_color_manual(values = c(
-    "Linear Model" = "#b1a570", 
-    "Mixed Effects" = "#6c6e72", 
-    "Segmented Trend" = "#d9c55c"
-  )) +
+# Plot
+ggplot(plot_focal, aes(x = year, y = normalized_count, colour = species_code)) +
+  geom_smooth(method = "lm") +
+  geom_point(size = 2) +
   labs(
-    title = "Trends in Mean Rao's Q – WBNP Focal Species",
-    subtitle = "Linear Model, Mixed Effects, and Segmented Trends",
     x = "Year",
-    y = "Mean Rao's Quadratic Entropy",
-    color = "Trend Type"
+    y = "Normalized Count",
+    title = "Normalized Count of Species Abundance",
+    colour = "Species Code"
   ) +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(size = 16, face = "bold"),
-    plot.subtitle = element_text(size = 12),
-    axis.title = element_text(size = 14),
-    axis.text = element_text(size = 12)
-  )
+  scale_colour_viridis_d(option = "plasma") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  facet_wrap(~species_code)
+
+
+ggplot(plot_focal_guild, aes(x = year, y = normalized_count, colour = guild)) +
+  geom_smooth(method = "lm") +
+  geom_point(size = 2) +
+  labs(
+    x = "Year",
+    y = "Normalized Count",
+    title = "Normalized Count of Guilds",
+    colour = "Guilds"
+  ) +
+  scale_colour_viridis_d(option = "plasma") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  facet_wrap(~guild, labeller = label_wrap_gen(width = 30))
 
 ```
-
-
-# Discussion
-
-
