@@ -47,7 +47,7 @@ library(AICcmodavg)
 library(leaflet)
 library(modifiedmk)
 
-wt_auth()
+#wt_auth()
 
 load('wbnp.RData')
 #save.image('wbnp.RData')
@@ -332,6 +332,29 @@ kable(guilds)
 ```{r}
 #| warning: false
 #| echo: false
+#| eval: false
+#| message: false
+#| include: true
+#| results: hide
+#| code-fold: true
+
+wbnp_activity <- wbnp_main |>
+  wt_tidy_species(remove = c("mammal","amphibian","abiotic","insect","unknown"), zerofill = T) |>
+  dplyr::select(location, recording_date_time, species_common_name, species_code, individual_count) |>
+  mutate(julian = lubridate::yday(recording_date_time),
+         month= month(recording_date_time),
+         year = factor(year(recording_date_time))) |>
+  inner_join(guilds |> dplyr::select(species_code, guild)) |>
+  arrange(species_code) |>
+  group_by(species_code) |>
+  add_tally() |>
+  ungroup()
+
+```
+
+```{r}
+#| warning: false
+#| echo: false
 #| eval: true
 #| message: false
 #| include: true
@@ -343,18 +366,7 @@ kable(guilds)
 #| label: fig-spp-activity
 #| cap-location: margin
 
-wbnp_main |>
-  wt_tidy_species(remove = c("mammal","amphibian","abiotic","insect","unknown"), zerofill = T) |>
-  select(location, recording_date_time, species_common_name, species_code, individual_count) |>
-  mutate(julian = lubridate::yday(recording_date_time),
-         month= month(recording_date_time),
-         year = factor(year(recording_date_time))) |>
-  inner_join(guilds |> select(species_code, guild)) |>
-  arrange(species_code) |>
-  group_by(species_code) |>
-  add_tally() |>
-  ungroup() |>
-  ggplot(aes(x = julian, y = species_common_name, fill = guild)) + 
+ggplot(wbnp_activity, aes(x = julian, y = species_common_name, fill = guild)) + 
   geom_density_ridges(scale = 3, rel_min_height = 0.005, alpha = 0.4) + 
   scale_fill_viridis_d(option = "plasma") +
   xlim(120,210) +
@@ -362,7 +374,9 @@ wbnp_main |>
   xlab("Day of Year") + 
   ylab("Species")
 
+
 ```
+
 
 ## Species diversity
 
@@ -371,14 +385,9 @@ Shannon's diversity was stable based on results. (see @fig-shannon.)
 ```{r}
 #| warning: false
 #| echo: true
-#| eval: true
+#| eval: false
 #| message: false
 #| include: true
-#| results: hide
-#| fig-align: center
-#| fig-cap: Shannon diversity index over years
-#| label: fig-shannon
-#| cap-location: bottom
 #| code-fold: true
 
 shannon_d <- wbnp_main |> 
@@ -398,6 +407,21 @@ shannon_d <- wbnp_main |>
   group_by(location, year) |>
   summarise(shannon_index = diversity(total_count, index = "shannon")) |>
   ungroup() 
+
+```
+
+```{r}
+#| warning: false
+#| echo: true
+#| eval: true
+#| message: false
+#| include: true
+#| results: hide
+#| fig-align: center
+#| fig-cap: Shannon diversity index over years
+#| label: fig-shannon
+#| cap-location: bottom
+#| code-fold: true
 
 ggplot(shannon_d, aes(x = factor(year), y = shannon_index, fill = factor(year))) +
   geom_boxplot() +
