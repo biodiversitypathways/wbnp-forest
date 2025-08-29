@@ -107,10 +107,12 @@ In 2018, Wood Buffalo National Park's Forested Region initiated a program incorp
 
 The objectives of this report are to:
 
--   Describe the data management and processing procedures for the acoustic data collected from 2018 to 2023;
+-   Describe the data management and processing procedures for the acoustic data collected from 2018 to 2024;
 -   Utilize traditional human tagging, visual scanning and automated recognition techniques to detect and count species and individuals heard on recordings;
 -   Define straightforward methods for evaluating species presence, species richness, and species occupancy over time at various locations; \* Offer recommendations for ongoing monitoring approaches to contribute to the assessment of ecological integrity in forest ecosystems;
 -   Facilitate data publication to the public, resource managers, academic institutions, and any other relevant agencies
+
+Specifically this report targets to evaluate forest bird communities within the park by examining species-specific relative abundance trends and community diversity over a six-year period. We focus on twelve focal species representing distinct foraging guilds: granivores (ground to lower canopy gleaners: White-throated Sparrow, Dark-eyed Junco), insectivores performing aerial hawking (Alder Flycatcher, Least Flycatcher), bark gleaners and excavators (Black-and-white Warbler, Yellow-bellied Sapsucker), ground gleaners (Hermit Thrush, Ovenbird), and canopy gleaners (Tennessee Warbler, Yellow Warbler, Swainson’s Thrush, Western Tanager). For each species, we quantify relative abundance and assess five-year population trends. In addition, Shannon diversity is calculated annually at three hierarchical levels: park-wide, per site, and per foraging guild, with corresponding five-year trends. Analyses incorporate methods to control for differences in sampling periods and observation effort across years and sites to ensure robust comparisons.
 
 # Methods
 
@@ -577,3 +579,5 @@ ggplot(plot_focal_guild, aes(x = year, y = normalized_count, colour = guild)) +
   facet_wrap(~guild, labeller = label_wrap_gen(width = 30))
 
 ```
+
+# Discussion
