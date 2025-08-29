@@ -7,7 +7,11 @@ format:
 navbar: right
 theme: cosmo
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-author: "Alex MacPhail"
+author: 
+  - name: "Alex MacPhail"
+    affiliation: "Biodiversity Pathways Ltd."
+  - name: "Nicolas Comeford"
+    affiliation: "Parks Canada, Wood Buffalo National Park"
 editor: visual
 bibliography: references.bib
 nocite: '@*'
@@ -87,6 +91,10 @@ wbnp_main <-
 
 Passive acoustic monitoring has proven to be an effective tool for tracking vocalizing species. Advances in environmental sensors have made them increasingly easy to deploy and program, allowing them to autonomously generate extensive soundscape datasets. These datasets have become invaluable for monitoring ecological integrity. Wood Buffalo National Park deployed autonomous recording units (ARUs) across `r wbnp_locs |> st_drop_geometry() |> select(location) |> distinct() |> tally()` locations as part of a comprehensive six-year survey. The ARUs detected a total of `r nrow(distinct_spp)` species, including birds, amphibians, and mammals. Analysis of the data showed that species diversity and richness remained relatively stable over time, though relative abundance trends varied among major forest guilds. Granivores, in particular, exhibited the largest significant increase in relative abundance. Ongoing monitoring of these sites is critical for detecting shifts in species communities, particularly as climate-driven changes in landcover continue to rapidly alter habitat conditions.
 
+::: {.callout-note collapse="true" style="background-color: #f4f4f4; padding: 20px;"}
+This report is dynamically generated, meaning its results may evolve with the addition of new data or further analyses. For the most recent updates, refer to the publication date and feel free to reach out to the authors.
+:::
+
 # Land Acknowledgement
 
 In the spirit of Reconciliation, we respectfully acknowledge that the lands of Wood Buffalo National Park where this study took place are the traditional territories of the Mikisew Cree First Nation, Athabasca Chipewyan First Nation, Fort Chipewyan Métis, Salt River First Nation, K'atl'odeeche First Nation, Deninu Kue First Nation, Fort Smith Métis Council, Hay River Métis Council, and the Fort Resolution Métis Council.
@@ -107,7 +115,6 @@ The objectives of this report are to:
 # Methods
 
 Data were collected during the spring and summer seasons from `r min(wbnp_locs$year)` to `r max(wbnp_locs$year)`. A total of `r wbnp_locs |> st_drop_geometry() |> select(location) |> distinct() |> tally()` locations were surveyed over the six-year period. Locations were surveyed on rotation with `r length(repeats)` locations (`r repeats`) surveyed each year. A detailed list of all survey years can be found in Table 1 (@tbl-loc-summary) and illustrated in Figure 1 (@fig-locs). ARUs were deployed at the beginning of the breeding season in April-May, and rotated locations until their final retrieval in July-August. The ARUs were set to record for \[\]. On average, each ARU recorded for
-
 
 ```{r}
 #| echo: false
@@ -143,9 +150,10 @@ locs_summary <- wbnp_locs_map |>
   rename('Location' = location)
 
 years <- sort(unique(wbnp_locs_map$year))
+year_unq <- unique(wbnp_locs_map$year)
 pal <- colorFactor(palette = "Set1", domain = years)  # Set1 has distinct colors
 
-leaflet() %>%
+m <- leaflet() %>%
   addTiles() %>%
   addPolygons(
     data = wbnp_shp,
@@ -153,13 +161,26 @@ leaflet() %>%
     weight = 1,
     fillOpacity = 0.4,
     popup = ~paste("Park:", adminAreaN)
-  ) %>%
-  addCircleMarkers(
-    data = wbnp_locs_map,
-    popup = ~paste("Location:", location, "<br>", "Year:", year),
-    fillOpacity = 1,
-    color = ~pal(year),  # Color based on year
-    radius = 6
+  )
+
+# Add circle markers per year
+for (yr in year_unq) {
+  m <- m %>%
+    addCircleMarkers(
+      data = wbnp_locs_map[wbnp_locs_map$year == yr, ],
+      popup = ~paste("Location:", location, "<br>", "Year:", year),
+      fillOpacity = 1,
+      color = ~pal(year),
+      radius = 6,
+      group = as.character(yr)  # assign group per year
+    )
+}
+
+# Add layer control for years
+m %>%
+  addLayersControl(
+    overlayGroups = as.character(year_unq),
+    options = layersControlOptions(collapsed = FALSE)
   ) %>%
   addMeasure(primaryLengthUnit = "meters", primaryAreaUnit = "sqmeters") %>%
   addMiniMap(position = "bottomleft") %>%
@@ -169,7 +190,6 @@ leaflet() %>%
     values = wbnp_locs_map$year,
     title = "Year"
   )
-
 
 
 ```
@@ -194,8 +214,6 @@ datatable(locs_summary,
   formatStyle(columns = colnames(locs_summary), 
               backgroundColor = styleEqual(c("NA"), "lightgray"))  
 ```
-
-
 
 ## Community data processing
 
@@ -379,7 +397,6 @@ ggplot(wbnp_activity, aes(x = julian, y = species_common_name, fill = guild)) +
 
 
 ```
-
 
 ## Species diversity
 
