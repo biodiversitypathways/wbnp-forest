@@ -475,6 +475,24 @@ mix_shannon <- lmer(shannon_index ~ year + (1 | location), data = shannon_d)
 yearly_shannon <- yearly_shannon %>%
   mutate(mix_fit = predict(mix_shannon, newdata = yearly_shannon, re.form = NA))
 
+```
+
+```{r}
+#| warning: false
+#| echo: true
+#| eval: true
+#| message: false
+#| include: true
+#| results: hide
+#| fig-width: 10
+#| fig-height: 8
+#| fig-align: center
+#| fig-cap: Trend in Mean Shannon Diversity across years
+#| label: fig-shannon-trend
+#| cap-location: bottom
+#| code-fold: true
+
+
 ggplot(yearly_shannon, aes(x = year, y = mean_shannon)) +
   geom_point(size = 2, color = "#2c7fb8") +                   # points for mean Shannon
   geom_line(aes(y = mix_fit), color = "#d95f02", size = 1.2) + # predicted trend from mixed model
